@@ -3,23 +3,49 @@ package typespeed.view;
 import javax.swing.*; 
 import java.awt.*; 
 import java.util.ArrayList; 
-import java.util.List; 
+import java.util.List;
+import java.util.Random; 
 
 public class TypespeedGUI {
+
     JFrame mainFrame;
     JTextArea textArea; 
     JLabel scoreLabel, levelTypeLabel, missedLabel, timelabel; 
     JPanel bottomPanel; 
+    CustomDrawPanel drawPanel;
 
+    class CustomDrawPanel extends JPanel{
+        List<Word> words = new ArrayList<>();
+
+        public CustomDrawPanel(){
+            setPreferredSize(new Dimension(800,600));
+            setBackground(Color.BLACK);
+        }
+
+        public void addWord(Word word){
+            words.add(word);
+            repaint();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g){
+            super.paintComponent(g);
+            for(Word word : words){
+                g.setColor(word.color);
+                g.drawString(word.text, word.position.x, word.position.y);
+            }
+        }
+    }
     public class Word{
         String text; 
         Color color; 
-        int position; 
+        Point position;
 
-        public Word(String text, Color color, int posiiton) {
+
+        public Word(String text, Color color, Point posiiton) {
             this.text = text;
             this.color = color;
-            this.position = position; 
+            this.position = posiiton;
         }
     }
 
@@ -29,9 +55,8 @@ public class TypespeedGUI {
         mainFrame.setPreferredSize(new Dimension(800, 600));
         mainFrame.setLayout(new BorderLayout());
 
-        textArea = new JTextArea();
-        textArea.setFont(new Font("Symbola", Font.PLAIN, 20));
-        textArea.setEditable(false); 
+        drawPanel = new CustomDrawPanel();
+        mainFrame.add(drawPanel, BorderLayout.CENTER);
 
         bottomPanel = new JPanel(); 
         bottomPanel.setLayout(new FlowLayout());
@@ -41,12 +66,11 @@ public class TypespeedGUI {
         missedLabel = new JLabel("Words Missed: 0");
         timelabel = new JLabel("Time: 60 sec");
 
+
         bottomPanel.add(scoreLabel);
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
         bottomPanel.add(timelabel);
-
-        mainFrame.add(textArea, BorderLayout.CENTER);
         mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
@@ -55,8 +79,28 @@ public class TypespeedGUI {
     }
 
     public void displayWord(Word word){
-        textArea.append(word.text + " ");
-        textArea.setForeground(word.color);
+        drawPanel.addWord(word);
+    }
+
+    public Color getColorBasedOnPosition(Point position){
+        int sectionWidth = 800 / 3;
+
+        if(position.x < sectionWidth){
+            return new Color (0,255,0);
+        }else if (position.x >= sectionWidth && position.x < 2 * sectionWidth){
+            return new Color(255,255,0);
+        }else{
+            return new Color(255,0,0);
+        }
+    }
+
+     public Point getRandomPosition(){
+        int screenWidth = mainFrame.getWidth();
+        int screenHeight = mainFrame.getHeight();
+        Random random = new Random(); 
+        int x  = random.nextInt(screenWidth);
+        int y  = random.nextInt(screenHeight - 50) + 50;
+        return new Point(x,y);
     }
 
 }

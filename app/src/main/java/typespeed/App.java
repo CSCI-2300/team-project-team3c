@@ -4,38 +4,29 @@
 package typespeed;
 import typespeed.view.TypespeedGUI;
 import java.awt.Color; 
-import java.util.Random;
+import java.awt.*;
 
 public class App {
     public static void main(String[] args) {
         TypespeedGUI game = new TypespeedGUI(); 
 
+        Point position1 = game.getRandomPosition();
+        Color color1 = game.getColorBasedOnPosition(position1);
+
         // Hardcoded words to display for the prototype with colors and random positions
-        TypespeedGUI.Word word1 = game.new Word("prototype", getRandomColor(), getRandomPosition());  
+        TypespeedGUI.Word word1 = game.new Word("prototype", color1, position1);  
         game.displayWord(word1);
 
-        TypespeedGUI.Word word2 = game.new Word("game", getRandomColor(), getRandomPosition());  
+        Point position2 = game.getRandomPosition();
+        Color color2 = game.getColorBasedOnPosition(position2);
+
+        TypespeedGUI.Word word2 = game.new Word("game", color2, position2);  
         game.displayWord(word2);
 
-        TypespeedGUI.Word word3 = game.new Word("design", getRandomColor(), getRandomPosition());  
+        Point position3 = game.getRandomPosition();
+        Color color3 = game.getColorBasedOnPosition(position3);
+
+        TypespeedGUI.Word word3 = game.new Word("design", color3, position3);  
         game.displayWord(word3);
-    }
-
-    private static Color getRandomColor(){
-        Random random = new Random(); 
-        int position = random.nextInt(3);
-        if (position == 0) {
-            return Color.GREEN;
-        } else if (position == 1){
-            return Color.YELLOW;
-        } else {
-            return Color.RED;
-        }
-    }
-
-    private static int getRandomPosition(){
-        Random random = new Random(); 
-        int screenWidth = 800; 
-        return random.nextInt(screenWidth);
     }
 }
