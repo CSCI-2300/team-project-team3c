@@ -3,11 +3,39 @@
  */
 package typespeed;
 import typespeed.view.TypespeedGUI;
+import java.awt.Color; 
+import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
         TypespeedGUI game = new TypespeedGUI(); 
-        game.displayWord("hello");
-        game.displayWord("word");
+
+        // Hardcoded words to display for the prototype with colors and random positions
+        TypespeedGUI.Word word1 = game.new Word("prototype", getRandomColor(), getRandomPosition());  
+        game.displayWord(word1);
+
+        TypespeedGUI.Word word2 = game.new Word("game", getRandomColor(), getRandomPosition());  
+        game.displayWord(word2);
+
+        TypespeedGUI.Word word3 = game.new Word("design", getRandomColor(), getRandomPosition());  
+        game.displayWord(word3);
+    }
+
+    private static Color getRandomColor(){
+        Random random = new Random(); 
+        int position = random.nextInt(3);
+        if (position == 0) {
+            return Color.GREEN;
+        } else if (position == 1){
+            return Color.YELLOW;
+        } else {
+            return Color.RED;
+        }
+    }
+
+    private static int getRandomPosition(){
+        Random random = new Random(); 
+        int screenWidth = 800; 
+        return random.nextInt(screenWidth);
     }
 }
