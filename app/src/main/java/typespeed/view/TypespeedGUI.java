@@ -61,10 +61,10 @@ public class TypespeedGUI {
         bottomPanel = new JPanel(); 
         bottomPanel.setLayout(new FlowLayout());
         
-        scoreLabel = new JLabel("Score: 0");
-        levelTypeLabel = new JLabel("Level: Difficult");
-        missedLabel = new JLabel("Words Missed: 0");
-        timelabel = new JLabel("Time: 60 sec");
+        scoreLabel = new JLabel("Score: 4     ");
+        levelTypeLabel = new JLabel("Level: Difficult     ");
+        missedLabel = new JLabel("Words Missed: 3     ");
+        timelabel = new JLabel("Time: 5 sec     ");
 
 
         bottomPanel.add(scoreLabel);
