@@ -3,12 +3,14 @@
  */
 package typespeed;
 import typespeed.view.TypespeedGUI;
+import typespeed.controller.GameController; 
 import java.awt.Color; 
 import java.awt.*;
 
 public class App {
     public static void main(String[] args) {
-        TypespeedGUI game = new TypespeedGUI(); 
+        TypespeedGUI view = new TypespeedGUI(); 
+        GameController controller = new GameController(view); 
 
         Point position1 = game.getRandomPosition();
         Color color1 = game.getColorBasedOnPosition(position1);

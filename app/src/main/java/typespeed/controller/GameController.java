@@ -2,22 +2,38 @@ package typespeed.controller;
 
 import typespeed.model.Word;
 import typespeed.view.GameObserver;
+import typespeed.view.TypespeedGUI;
 
 import java.awt.*;
 import java.util.*;
+import java.io.*; 
 
 public class GameController{
     
     private Timer wordTimer;
     private Timer gameTimer;
     private int gameTime = 60; 
-    private int wordSpeed = 1; 
-    private Word currentWord; 
+    private int score = 0; 
+    private int missedWords = 0; 
+    private List<String> wordList; 
+    private List<Word> words = new ArrayList<>(); 
     private TypespeedGUI view; 
 
     public GameController(TypespeedGUI view){
         this.view = view;
+        loadWords("PlayEasy.txt");
         startGame(); 
+    }
+
+    private void loadWords(String filename){
+        wordList = new ArrayList<>(); 
+        try{
+            Scanner scanner = new Scanner(new File(filename));
+            while(scanner.hasNextLine()){
+                wordList.add(scanner.nextLine.trim());
+            }
+            scanner.close(); 
+        } 
     }
 
     private void startGame(){
@@ -33,7 +49,7 @@ public class GameController{
             public void run() {
                 gameTime--;
                 view.updateTimer(gameTime);
-                if(gameTime <= 0){
+                if(gameTime <= 0 || wordList.size()){
                     endGame();
                 }
             }

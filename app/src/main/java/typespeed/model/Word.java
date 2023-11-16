@@ -1,35 +1,22 @@
 package typespeed.model;
 
-import java.awt.*; 
 import typespeed.view.GameObserver;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Point; 
 
 
 
 public class Word{
-    private char []word;
+    private String text; 
+    private Point position; 
+    private int speed; 
 
-    private int score;
-
-    private List <GameObserver> Observers = new ArrayList<>();
-
-    public void addObserver(GameObserver observer){
-        Observers.add(observer);
+    public Word(String text, Point position, int speed){
+        this.text = text;
+        this.position = position; 
+        this.speed = speed; 
     }
 
-    public void notifyObservers(){
-        for (GameObserver observer : Observers){
-            if(observer != null){
-                observer.update();
-            }
-        }
+    public void updatePosition(){
+        position.x += speed; 
     }
-
-    public word (String word);
-        this.word = word.toCharArray();
 }
-
-    public void InitializeGameState(){
-        this.guesses = 0;
-    }

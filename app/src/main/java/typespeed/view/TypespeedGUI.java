@@ -1,4 +1,6 @@
 package typespeed.view; 
+import typespeed.model.Word; 
+import typespeed.controller.GameController;
 
 import javax.swing.*; 
 import java.awt.*; 
@@ -6,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random; 
 
-public class TypespeedGUI {
+public class TypespeedGUI implements GameObserver{
 
-    JFrame mainFrame;
-    JTextArea textArea; 
-    JLabel scoreLabel, levelTypeLabel, missedLabel, timelabel; 
-    JPanel bottomPanel; 
-    CustomDrawPanel drawPanel;
+    private JFrame mainFrame;
+    private JTextArea textArea; 
+    private JLabel scoreLabel, levelTypeLabel, missedLabel, timelabel; 
+    private JPanel bottomPanel; 
+    private CustomDrawPanel drawPanel;
+    private GameController controller; 
 
     class CustomDrawPanel extends JPanel{
         List<Word> words = new ArrayList<>();
@@ -50,6 +53,7 @@ public class TypespeedGUI {
     }
 
     public TypespeedGUI(){
+        controller = new GameController(this); 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(800, 600));
@@ -101,6 +105,10 @@ public class TypespeedGUI {
         int x  = random.nextInt(screenWidth);
         int y  = random.nextInt(screenHeight - 50) + 50;
         return new Point(x,y);
+    }
+
+    public void updateTimer(int time){
+
     }
 
 }
