@@ -5,10 +5,8 @@ import typespeed.view.GameObserver;
 import typespeed.view.TypespeedGUI;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException; 
 import java.util.List; 
-import java.util.Scanner; 
+import java.util.Random; 
 import java.util.Timer; 
 import java.util.TimerTask;  
 import java.util.ArrayList;
@@ -23,27 +21,18 @@ public class GameController{
     private List<String> wordList; 
     private List<Word> words = new ArrayList<>(); 
     private TypespeedGUI view; 
+    private FileHandler fileHandler; 
 
     public GameController(TypespeedGUI view){
         this.view = view;
+        fileHandler = new FileHandler(); 
         loadWords("PlayEasy.txt");
         startGame(); 
     }
 
-    private void loadWords(String filename){
-        wordList = new ArrayList<>(); 
-        try{
-            File file = new File("src/main/java/typespeed/" + filename);
-            Scanner scanner = new Scanner(file);
-            while(scanner.hasNextLine()){
-                wordList.add(scanner.nextLine().trim());
-            }
-            scanner.close(); 
-        } catch (FileNotFoundException e){
-            e.printStackTrace(); 
-        }
+    private void loadWords(String  filename){
+        wordList = fileHandler.loadWords(filename);
     }
-
 
     private void startGame(){
         wordTimer = new Timer(); 
