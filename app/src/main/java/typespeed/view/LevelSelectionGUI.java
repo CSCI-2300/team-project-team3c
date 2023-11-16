@@ -1,24 +1,22 @@
 package typespeed.view; 
-import typespeed.controller.GameController;
 
 import javax.swing.*; 
 import java.awt.*; 
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
 
-public class LevelSelectionGUI {
+public class LevelSelectionGUI implements GameObserver{
     private JFrame mainFrame;
-    private GameController controller; 
+    private JPanel bottomPanel; 
 
     public LevelSelectionGUI(){
-        controller = new GameController(this); 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(400, 300));
         mainFrame.setLayout(new BorderLayout());
 
         JLabel titleLabel = new JLabel("Typespeed", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial, Font.BOLD, 30")); 
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30)); 
         mainFrame.add(titleLabel, BorderLayout.NORTH); 
 
         bottomPanel = new JPanel(new GridLayout(2, 1, 10, 10)); 
@@ -48,7 +46,7 @@ public class LevelSelectionGUI {
 
     private void startGame(String difficulty){
         mainFrame.dispose(); 
-        TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
+        TypespeedGUI gameGUI = new TypespeedGUI();
     }
 
 }

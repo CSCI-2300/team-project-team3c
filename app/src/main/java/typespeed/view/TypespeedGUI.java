@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*; 
 import java.util.ArrayList; 
 import java.util.List;
-import java.util.Random; 
 
 public class TypespeedGUI implements GameObserver{
 
@@ -15,6 +14,7 @@ public class TypespeedGUI implements GameObserver{
     private JPanel bottomPanel; 
     private CustomDrawPanel drawPanel;
     private GameController controller; 
+    private String difficulty; 
 
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
@@ -43,7 +43,7 @@ public class TypespeedGUI implements GameObserver{
         }
     }
 
-    public TypespeedGUI(){
+    public TypespeedGUI(String difficulty){
         controller = new GameController(this); 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

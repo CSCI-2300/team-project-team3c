@@ -5,8 +5,13 @@ import typespeed.view.GameObserver;
 import typespeed.view.TypespeedGUI;
 
 import java.awt.*;
-import java.util.*;
-import java.io.*; 
+import java.io.File;
+import java.io.FileNotFoundException; 
+import java.util.List; 
+import java.util.Scanner; 
+import java.util.Timer; 
+import java.util.TimerTask;  
+import java.util.ArrayList;
 
 public class GameController{
     
