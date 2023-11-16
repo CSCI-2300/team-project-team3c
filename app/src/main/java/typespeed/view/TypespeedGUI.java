@@ -75,7 +75,9 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public void displayWord(Word word){
-        drawPanel.addWord(word);
+        if(drawPanel != null){
+            drawPanel.addWord(word);
+        }
     }
 
     public Color getColorOnPosition(Point position){
@@ -99,10 +101,19 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public void updateTimer(int time){
-        timeLabel.setText("Time: " + time + " sec");
+        if(timeLabel != null){
+            timeLabel.setText("Time: " + time + " sec");
+        }
+    }
+
+    private boolean isFrameVisible(){
+        return mainFrame != null && mainFrame.isVisible(); 
     }
 
     public Point getRandomPosition(){
+        if (!isFrameVisible()){
+            return new Point(0,0);
+        }
         int screenWidth = mainFrame.getWidth();
         int screenHeight = mainFrame.getHeight(); 
         Random random = new Random(); 

@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 
 public class LevelSelectionGUI{
     private JFrame mainFrame;
-    private JPanel bottomPanel; 
+    private JPanel bottomPanel;
+    private TypespeedGUI gameGUI;  
 
     public LevelSelectionGUI(){
         String difficulty = "Easy";
@@ -48,7 +49,7 @@ public class LevelSelectionGUI{
 
     private void startGame(String difficulty){
         mainFrame.dispose(); 
-        TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
+        gameGUI = new TypespeedGUI(difficulty);
     }
 
 }
