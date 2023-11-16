@@ -33,7 +33,8 @@ public class GameController{
     private void loadWords(String filename){
         wordList = new ArrayList<>(); 
         try{
-            Scanner scanner = new Scanner(new File(filename));
+            File file = new File("src/main/java/typespeed/" + filename);
+            Scanner scanner = new Scanner(file);
             while(scanner.hasNextLine()){
                 wordList.add(scanner.nextLine().trim());
             }
@@ -42,6 +43,7 @@ public class GameController{
             e.printStackTrace(); 
         }
     }
+
 
     private void startGame(){
         wordTimer = new Timer(); 
