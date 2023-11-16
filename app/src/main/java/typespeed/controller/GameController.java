@@ -49,7 +49,7 @@ public class GameController{
             public void run() {
                 gameTime--;
                 view.updateTimer(gameTime);
-                if(gameTime <= 0 || wordList.size()){
+                if(gameTime <= 0 || missedWords == wordList.size()){
                     endGame();
                 }
             }
@@ -57,15 +57,39 @@ public class GameController{
     }
 
     private void generateWord(){
-        // code to generate words at random positions at the determined speed
-        // update the `currentWord' and notify the view
+        if(!wordList.isEmpty()){
+            int randomIndex = (int)(Math.random()*wordList.size());
+            String wordText = wordList.get(randomIndex); //getting word from the random index in list
+            Point position = view.getRandomPosition(); 
+            Word word = new Word(wordText, position, wordSpeed); 
+            words.add(word);
+            view.displayWord(word); 
+        }
     }
 
     private void endGame(){
         wordTimer.cancel(); 
         gameTimer.cancel(); 
-        // other actions 
+        view.showScore(score); 
+        //show highest score screen
     }
 
-    // methods to handle user input, word movement, scoring
+    public void checkWord(String userInput){
+        for(int i = 0; i < words.size(); i++){
+            Word word = words.get(i); 
+            if(word.getText().equalsIgnoeCase(userInput)){
+                words.remove(i); 
+                score++;
+                view.updateScore(score);
+                return; 
+            } else {
+                word.updatePosition(); 
+                if(word.getPosition().x >= 800){
+                    words.remove(i); 
+                    missedWords++; 
+                    view.updateMissedWords(missedWords); 
+                }
+            }
+        }
+    }
 }
