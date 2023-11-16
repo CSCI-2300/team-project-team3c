@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*; 
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.Random;
 
 public class TypespeedGUI implements GameObserver{
 
@@ -48,10 +49,10 @@ public class TypespeedGUI implements GameObserver{
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(800, 600));
-        mainFrame.setLayout(new BorderLayout());
+        mainFrame.setLayout(new FlowLayout());
 
         drawPanel = new CustomDrawPanel();
-        mainFrame.add(drawPanel, BorderLayout.CENTER);
+        mainFrame.add(drawPanel);
 
         bottomPanel = new JPanel(); 
         bottomPanel.setLayout(new FlowLayout());
@@ -66,7 +67,7 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
         bottomPanel.add(timeLabel);
-        mainFrame.add(bottomPanel, BorderLayout.SOUTH);
+        mainFrame.add(bottomPanel);
 
         mainFrame.pack();
         mainFrame.setVisible(true);
@@ -89,7 +90,7 @@ public class TypespeedGUI implements GameObserver{
         }
     }
 
-    public void updateScore(int score){
+    public void updateAndShowScore(int score){
         scoreLabel.setText("Score: " + score); 
     }
 
@@ -99,5 +100,14 @@ public class TypespeedGUI implements GameObserver{
 
     public void updateTimer(int time){
         timeLabel.setText("Time: " + time + " sec");
+    }
+
+    public Point getRandomPosition(){
+        int screenWidth = mainFrame.getWidth();
+        int screenHeight = mainFrame.getHeight(); 
+        Random random = new Random(); 
+        int x = random.nextInt(screenWidth);
+        int y = random.nextInt(screenHeight - 50) + 50; 
+        return new Point(x,y);
     }
 }

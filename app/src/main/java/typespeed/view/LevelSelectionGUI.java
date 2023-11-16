@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
 
-public class LevelSelectionGUI implements GameObserver{
+public class LevelSelectionGUI{
     private JFrame mainFrame;
     private JPanel bottomPanel; 
 
@@ -37,10 +37,10 @@ public class LevelSelectionGUI implements GameObserver{
             }
         });
 
-        buttonPanel.add(easyButton);
-        buttonPanel.add(difficultButton);
+        bottomPanel.add(easyButton);
+        bottomPanel.add(difficultButton);
 
-        mainFrame.add(buttonPanel, BorderLayout.CENTER);
+        mainFrame.add(bottomPanel, BorderLayout.CENTER);
 
         mainFrame.pack(); 
         mainFrame.setVisible(true);
@@ -48,7 +48,7 @@ public class LevelSelectionGUI implements GameObserver{
 
     private void startGame(String difficulty){
         mainFrame.dispose(); 
-        TypespeedGUI gameGUI = new TypespeedGUI();
+        TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
     }
 
 }

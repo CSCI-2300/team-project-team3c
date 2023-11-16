@@ -68,6 +68,7 @@ public class GameController{
             int randomIndex = (int)(Math.random() * wordList.size());
             String wordText = wordList.get(randomIndex); //getting word from the random index in list
             Point position = view.getRandomPosition(); 
+            int wordSpeed = 1; 
             Word word = new Word(wordText, position, wordSpeed); 
             words.add(word);
             view.displayWord(word); 
@@ -77,7 +78,7 @@ public class GameController{
     private void endGame(){
         wordTimer.cancel(); 
         gameTimer.cancel(); 
-        view.showScore(score); 
+        view.updateAndShowScore(score); 
         //show highest score screen
     }
 
@@ -87,7 +88,7 @@ public class GameController{
             if(word.getText().equalsIgnoreCase(userInput)){
                 words.remove(i); 
                 score++;
-                view.updateScore(score);
+                view.updateAndShowScore(score);
                 return; 
             } else {
                 word.updatePosition(); 

@@ -6,8 +6,8 @@ import typespeed.view.LevelSelectionGUI;
 
 public class App {
     public static void main(String[] args) {
-        TypespeedGUI view = new TypespeedGUI(); 
+        TypespeedGUI view = new TypespeedGUI("Easy"); 
         GameController controller = new GameController(view); 
-        LevelSelectionGUI view = new LevelSelectionGUI(); 
+        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI(); 
     }
 }
