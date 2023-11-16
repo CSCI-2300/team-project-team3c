@@ -11,7 +11,7 @@ public class LevelSelectionGUI{
     private TypespeedGUI gameGUI;  
 
     public LevelSelectionGUI(){
-        String difficulty = "Easy";
+        String difficulty = "PlayEasy";
         TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +48,9 @@ public class LevelSelectionGUI{
     }
 
     private void startGame(String difficulty){
-        mainFrame.dispose(); 
+        if(gameGUI != null){
+            gameGUI.closeWindow(); 
+        }
         gameGUI = new TypespeedGUI(difficulty);
     }
 

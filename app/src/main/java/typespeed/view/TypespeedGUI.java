@@ -34,6 +34,11 @@ public class TypespeedGUI implements GameObserver{
             repaint();
         }
 
+        public void setWords(List<Word> words){
+            this.words = words; 
+            repaint(); 
+        }
+
         @Override
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
@@ -45,17 +50,18 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public TypespeedGUI(String difficulty){
-        controller = new GameController(this); 
+        this.controller = new GameController(this, difficulty);
+        controller.startGame();  
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(800, 600));
-        mainFrame.setLayout(new FlowLayout());
+        mainFrame.setLayout(new BorderLayout());
 
         drawPanel = new CustomDrawPanel();
         mainFrame.add(drawPanel);
 
         bottomPanel = new JPanel(); 
-        bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         
         scoreLabel = new JLabel("Score: 0     ");
         levelTypeLabel = new JLabel("Level: " + difficulty +"     ");
@@ -67,7 +73,7 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
         bottomPanel.add(timeLabel);
-        mainFrame.add(bottomPanel);
+        mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
         mainFrame.setVisible(true);
@@ -93,7 +99,9 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public void updateAndShowScore(int score){
-        scoreLabel.setText("Score: " + score); 
+        if (scoreLabel != null){
+            scoreLabel.setText("Score: " + score); 
+        }
     }
 
     public void updateMissedWords(int missedWords){
@@ -110,6 +118,12 @@ public class TypespeedGUI implements GameObserver{
         return mainFrame != null && mainFrame.isVisible(); 
     }
 
+    public void closeWindow(){
+        if(mainFrame != null){
+            mainFrame.dispose(); 
+        }
+    }
+
     public Point getRandomPosition(){
         if (!isFrameVisible()){
             return new Point(0,0);
@@ -120,5 +134,10 @@ public class TypespeedGUI implements GameObserver{
         int x = random.nextInt(screenWidth);
         int y = random.nextInt(screenHeight - 50) + 50; 
         return new Point(x,y);
+    }
+
+    public void updateWordPositions(List<Word> words){
+        drawPanel.setWords(words); 
+        drawPanel.repaint();
     }
 }

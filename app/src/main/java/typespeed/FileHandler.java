@@ -1,4 +1,4 @@
-package typespeed.controller;
+package typespeed;
 
 import java.io.File;
 import java.io.FileNotFoundException; 
@@ -11,11 +11,15 @@ public class FileHandler {
         List<String> wordList = new ArrayList<>(); 
         try{
             File file = new File("src/main/java/typespeed/" + filename);
-            Scanner scanner = new Scanner(file);
-            while(scanner.hasNextLine()){
-                wordList.add(scanner.nextLine().trim());
+            if (file.exists()){
+                Scanner scanner = new Scanner(file);
+                while(scanner.hasNextLine()){
+                    wordList.add(scanner.nextLine().trim());
+                }
+                scanner.close(); 
+            } else {
+                System.out.println("File not found!");
             }
-            scanner.close(); 
         } catch (FileNotFoundException e){
             e.printStackTrace(); 
         }

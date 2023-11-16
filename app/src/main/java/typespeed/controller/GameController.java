@@ -2,14 +2,13 @@ package typespeed.controller;
 
 import typespeed.model.Word;
 import typespeed.view.GameObserver;
-import typespeed.view.TypespeedGUI;
+import typespeed.FileHandler;
 
 import java.awt.*;
 import java.util.List; 
-import java.util.Random; 
+import java.util.ArrayList;
 import java.util.Timer; 
 import java.util.TimerTask;  
-import java.util.ArrayList;
 
 public class GameController{
     
@@ -20,21 +19,21 @@ public class GameController{
     private int missedWords = 0; 
     private List<String> wordList; 
     private List<Word> words = new ArrayList<>(); 
-    private TypespeedGUI view; 
+    private GameObserver view; 
     private FileHandler fileHandler; 
 
-    public GameController(TypespeedGUI view){
+    public GameController(GameObserver view, String difficulty){
         this.view = view;
-        fileHandler = new FileHandler(); 
-        loadWords("PlayEasy.txt");
+        this.fileHandler = new FileHandler(); 
+        this.wordList = fileHandler.loadWords(difficulty);
         startGame(); 
     }
 
-    private void loadWords(String  filename){
+    /*private void loadWords(String  filename){
         wordList = fileHandler.loadWords(filename);
-    }
+    }*/
 
-    private void startGame(){
+    public void startGame(){
         wordTimer = new Timer(); 
         wordTimer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
@@ -45,9 +44,10 @@ public class GameController{
         gameTimer = new Timer(); 
         gameTimer.scheduleAtFixedRate(new TimerTask(){
             public void run() {
-                gameTime--;
-                view.updateTimer(gameTime);
-                if(gameTime <= 0 || missedWords == wordList.size()){
+                if(gameTime > 0 && missedWords < wordList.size()){
+                    gameTime--;
+                    view.updateTimer(gameTime);
+                }else {
                     endGame();
                 }
             }
@@ -58,7 +58,7 @@ public class GameController{
         if(!wordList.isEmpty()){
             int randomIndex = (int)(Math.random() * wordList.size());
             String wordText = wordList.get(randomIndex); //getting word from the random index in list
-            Point position = view.getRandomPosition(); 
+            Point position = new Point(0, getRandomYPosition());
             int wordSpeed = 1; 
             Word word = new Word(wordText, position, wordSpeed); 
             words.add(word);
@@ -71,6 +71,26 @@ public class GameController{
         gameTimer.cancel(); 
         view.updateAndShowScore(score); 
         //show highest score screen
+    }
+
+    private int getRandomYPosition(){
+        return (int) (Math.random()*500); 
+    }
+
+    public void startWordMovement(){
+        Timer wordMovementTimer = new Timer();
+        wordMovementTimer.scheduleAtFixedRate(new TimerTask(){
+            public void run(){
+                moveWords(); 
+            }
+        }, 0, 100);
+    }
+
+    private void moveWords(){
+        for(Word word : words){
+            word.updatePosition(); 
+        }
+        view.updateWordPositions(words); 
     }
 
     public void checkWord(String userInput){
