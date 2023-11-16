@@ -11,11 +11,14 @@ import java.util.Random;
 public class TypespeedGUI implements GameObserver{
 
     private JFrame mainFrame;
-    private JTextArea textArea; 
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timelabel; 
     private JPanel bottomPanel; 
     private CustomDrawPanel drawPanel;
     private GameController controller; 
+
+    private final Color leftColor = new Color(0, 255, 0); //Green
+    private final Color middleColor = new Color(255, 255, 0); //Yellow
+    private final Color rightColor = new Color(255, 0, 0); //Red
 
     class CustomDrawPanel extends JPanel{
         List<Word> words = new ArrayList<>();
@@ -34,21 +37,9 @@ public class TypespeedGUI implements GameObserver{
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             for(Word word : words){
-                g.setColor(word.color);
-                g.drawString(word.text, word.position.x, word.position.y);
+                g.setColor(getColorOnPosition(word.getPosition()));
+                g.drawString(word.getText(), word.getPosition().x, word.getPosition().y);
             }
-        }
-    }
-    public class Word{
-        String text; 
-        Color color; 
-        Point position;
-
-
-        public Word(String text, Color color, Point posiiton) {
-            this.text = text;
-            this.color = color;
-            this.position = posiiton;
         }
     }
 
@@ -65,10 +56,10 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel = new JPanel(); 
         bottomPanel.setLayout(new FlowLayout());
         
-        scoreLabel = new JLabel("Score: 4     ");
-        levelTypeLabel = new JLabel("Level: Difficult     ");
-        missedLabel = new JLabel("Words Missed: 3     ");
-        timelabel = new JLabel("Time: 5 sec     ");
+        scoreLabel = new JLabel("Score: 0     ");
+        levelTypeLabel = new JLabel("Level: " + difficulty +"     ");
+        missedLabel = new JLabel("Words Missed: 0     ");
+        timelabel = new JLabel("Time: 60 sec     ");
 
 
         bottomPanel.add(scoreLabel);
@@ -86,27 +77,6 @@ public class TypespeedGUI implements GameObserver{
         drawPanel.addWord(word);
     }
 
-    public Color getColorBasedOnPosition(Point position){
-        int sectionWidth = 800 / 3;
-
-        if(position.x < sectionWidth){
-            return new Color (0,255,0);
-        }else if (position.x >= sectionWidth && position.x < 2 * sectionWidth){
-            return new Color(255,255,0);
-        }else{
-            return new Color(255,0,0);
-        }
-    }
-
-     public Point getRandomPosition(){
-        int screenWidth = mainFrame.getWidth();
-        int screenHeight = mainFrame.getHeight();
-        Random random = new Random(); 
-        int x  = random.nextInt(screenWidth);
-        int y  = random.nextInt(screenHeight - 50) + 50;
-        return new Point(x,y);
-    }
-
     public void updateScore(int score){
         scoreLabel.setText("Score: " + score);
     }
@@ -115,5 +85,19 @@ public class TypespeedGUI implements GameObserver{
         missedLabel.setText("Words Missed: " + missedWords); 
     }
 
+    public void updateTimer(int time) {
+        timeLabel.setText("Time: " + time + " sec");
+    }
 
+    public Color getColorOnPosition(Point position){
+        int sectionWidth = 800/3;
+
+        if(position.x < sectionWidth){
+            return leftColor;
+        } else if (position.x >= sectionWidth && position.x < 2 * sectionWidth) {
+            return middleColor;
+        } else {
+            return rightColor; 
+        }
+    }
 }

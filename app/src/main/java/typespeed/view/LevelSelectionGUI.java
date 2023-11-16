@@ -1,5 +1,4 @@
 package typespeed.view; 
-import typespeed.model.Word; 
 import typespeed.controller.GameController;
 
 import javax.swing.*; 
@@ -7,8 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
 
-public class LevelSelectionGUI implements GameObserver{
-
+public class LevelSelectionGUI {
     private JFrame mainFrame;
     private GameController controller; 
 
@@ -49,7 +47,7 @@ public class LevelSelectionGUI implements GameObserver{
     }
 
     private void startGame(String difficulty){
-        frame.dispose(); 
+        mainFrame.dispose(); 
         TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
     }
 

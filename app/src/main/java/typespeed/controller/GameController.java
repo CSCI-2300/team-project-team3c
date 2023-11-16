@@ -30,7 +30,7 @@ public class GameController{
         try{
             Scanner scanner = new Scanner(new File(filename));
             while(scanner.hasNextLine()){
-                wordList.add(scanner.nextLine.trim());
+                wordList.add(scanner.nextLine().trim());
             }
             scanner.close(); 
         } catch (FileNotFoundException e){
@@ -60,7 +60,7 @@ public class GameController{
 
     private void generateWord(){
         if(!wordList.isEmpty()){
-            int randomIndex = (int)(Math.random()*wordList.size());
+            int randomIndex = (int)(Math.random() * wordList.size());
             String wordText = wordList.get(randomIndex); //getting word from the random index in list
             Point position = view.getRandomPosition(); 
             Word word = new Word(wordText, position, wordSpeed); 
