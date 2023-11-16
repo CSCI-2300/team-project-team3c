@@ -107,8 +107,13 @@ public class TypespeedGUI implements GameObserver{
         return new Point(x,y);
     }
 
-    public void updateTimer(int time){
-
+    public void updateScore(int score){
+        scoreLabel.setText("Score: " + score);
     }
+
+    public void updateMissedWords(int missedWords){
+        missedLabel.setText("Words Missed: " + missedWords); 
+    }
+
 
 }

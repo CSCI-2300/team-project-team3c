@@ -33,7 +33,9 @@ public class GameController{
                 wordList.add(scanner.nextLine.trim());
             }
             scanner.close(); 
-        } 
+        } catch (FileNotFoundException e){
+            e.printStackTrace(); 
+        }
     }
 
     private void startGame(){
