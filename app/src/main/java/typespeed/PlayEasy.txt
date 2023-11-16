@@ -1,3 +1,8 @@
-Testing
-Testing
-Testing
+card    
+short
+cat
+ball
+word
+fun
+wow
+catch

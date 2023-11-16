@@ -1,6 +1,6 @@
 package typespeed.model;
 
-
+import java.awt.*; 
 import typespeed.view.GameObserver;
 import java.util.ArrayList;
 import java.util.List;
