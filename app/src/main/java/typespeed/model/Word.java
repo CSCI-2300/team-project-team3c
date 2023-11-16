@@ -1,7 +1,7 @@
 package typespeed.model;
 
 import typespeed.view.GameObserver;
-import java.awt.Point; 
+import java.awt.*;; 
 
 
 
@@ -18,5 +18,13 @@ public class Word{
 
     public void updatePosition(){
         position.x += speed; 
+    }
+
+    public String getText(){
+        return text; 
+    }
+
+    public Point getPosition(){
+        return position; 
     }
 }

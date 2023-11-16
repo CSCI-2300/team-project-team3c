@@ -77,7 +77,7 @@ public class GameController{
     public void checkWord(String userInput){
         for(int i = 0; i < words.size(); i++){
             Word word = words.get(i); 
-            if(word.getText().equalsIgnoeCase(userInput)){
+            if(word.getText().equalsIgnoreCase(userInput)){
                 words.remove(i); 
                 score++;
                 view.updateScore(score);
