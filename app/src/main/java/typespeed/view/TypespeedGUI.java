@@ -10,7 +10,7 @@ import java.util.List;
 public class TypespeedGUI implements GameObserver{
 
     private JFrame mainFrame;
-    private JLabel scoreLabel, levelTypeLabel, missedLabel, timelabel; 
+    private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
     private CustomDrawPanel drawPanel;
     private GameController controller; 
@@ -59,13 +59,13 @@ public class TypespeedGUI implements GameObserver{
         scoreLabel = new JLabel("Score: 0     ");
         levelTypeLabel = new JLabel("Level: " + difficulty +"     ");
         missedLabel = new JLabel("Words Missed: 0     ");
-        timelabel = new JLabel("Time: 60 sec     ");
+        timeLabel = new JLabel("Time: 0 sec     ");
 
 
         bottomPanel.add(scoreLabel);
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
-        bottomPanel.add(timelabel);
+        bottomPanel.add(timeLabel);
         mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
@@ -75,18 +75,6 @@ public class TypespeedGUI implements GameObserver{
 
     public void displayWord(Word word){
         drawPanel.addWord(word);
-    }
-
-    public void updateScore(int score){
-        scoreLabel.setText("Score: " + score);
-    }
-
-    public void updateMissedWords(int missedWords){
-        missedLabel.setText("Words Missed: " + missedWords); 
-    }
-
-    public void updateTimer(int time) {
-        timeLabel.setText("Time: " + time + " sec");
     }
 
     public Color getColorOnPosition(Point position){
@@ -99,5 +87,17 @@ public class TypespeedGUI implements GameObserver{
         } else {
             return rightColor; 
         }
+    }
+
+    public void updateScore(int score){
+        scoreLabel.setText("Score: " + score); 
+    }
+
+    public void updateMissedWords(int missedWords){
+        missedLabel.setText("Words Missed: " + missedWords);
+    }
+
+    public void updateTimer(int time){
+        timeLabel.setText("Time: " + time + " sec");
     }
 }

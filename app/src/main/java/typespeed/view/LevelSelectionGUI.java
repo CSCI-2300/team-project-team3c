@@ -10,6 +10,8 @@ public class LevelSelectionGUI implements GameObserver{
     private JPanel bottomPanel; 
 
     public LevelSelectionGUI(){
+        String difficulty = "Easy";
+        TypespeedGUI gameGUI = new TypespeedGUI(difficulty);
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(400, 300));
