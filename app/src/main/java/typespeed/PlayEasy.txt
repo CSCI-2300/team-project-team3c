@@ -1,0 +1,8 @@
+card    
+short
+cat
+ball
+word
+fun
+wow
+catch
