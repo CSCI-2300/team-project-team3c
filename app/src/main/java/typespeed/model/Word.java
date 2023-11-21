@@ -1,8 +1,6 @@
 package typespeed.model;
 
 import typespeed.view.GameObserver;
-import java.awt.*;; 
-
 
 
 public class Word{

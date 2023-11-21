@@ -13,8 +13,6 @@ Issues to Fix (from GitHub of Deliverable1):
     - Controller class: Lines 89 - 94
 - Move your word collection files into the app directory of your repository, and remove the path to that file:
     - Main App class: Line 10, add the file extension: "PlayEasy.txt"
-
-- Unused Import in Line 4 of Word.java
   
 
 Some Tasks to Handle:
