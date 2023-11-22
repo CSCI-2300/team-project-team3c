@@ -13,6 +13,5 @@ public class App {
         
         GameModel model = new GameModel(wordList);
         LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI(model);
-        TypespeedGUI typespeedGUI = new TypespeedGUI(model, difficulty, wordList); 
     }
 }

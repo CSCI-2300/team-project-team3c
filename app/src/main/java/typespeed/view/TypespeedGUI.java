@@ -14,12 +14,12 @@ public class TypespeedGUI implements GameObserver{
 
     private JFrame mainFrame;
     private GameController controller; 
-    private JPanel wordPanel;
+    private CustomDrawPanel drawPanel;
 
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
-    private CustomDrawPanel drawPanel;
-    private String difficulty; 
+    
+    //private String difficulty; 
 
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
@@ -33,11 +33,6 @@ public class TypespeedGUI implements GameObserver{
             setBackground(Color.BLACK);
         }
 
-        public void addWord(Word word){
-            words.add(word);
-            repaint();
-        }
-
         public void setWords(List<Word> words){
             this.words = words; 
             repaint(); 
@@ -47,7 +42,7 @@ public class TypespeedGUI implements GameObserver{
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             for(Word word : words){
-                g.setColor(getColorOnPosition(new Point(word.getPositionX(), word.getPositionY())));
+                g.setColor(getColorOnPosition(word));
                 g.drawString(word.getText(), word.getPositionX(), word.getPositionY());
             }
         }
@@ -60,21 +55,15 @@ public class TypespeedGUI implements GameObserver{
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(800, 600));
-        mainFrame.setLayout(new BorderLayout());
 
         drawPanel = new CustomDrawPanel();
-        mainFrame.add(drawPanel);
+        drawPanel.setBackground(Color.BLACK);
+        mainFrame.add(drawPanel, BorderLayout.CENTER);
 
         bottomPanel = new JPanel(); 
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         
-        wordPanel = new JPanel(){
-            protected void paintComponent(Graphics g){
-                super.paintComponent(g);
-                renderWords(g, gameModel.getWords());
-            }
-        };
-        mainFrame.add(wordPanel, BorderLayout.CENTER);
+        
         scoreLabel = new JLabel("Score: 0     ");
         levelTypeLabel = new JLabel("Level: " + difficulty +"     ");
         missedLabel = new JLabel("Words Missed: 0     ");
@@ -93,18 +82,14 @@ public class TypespeedGUI implements GameObserver{
         controller.startGame(); 
     }
 
-    public void displayWord(Word word){
-        if(drawPanel != null){
-            drawPanel.addWord(word);
-        }
-    }
 
-    public Color getColorOnPosition(Point position){
+    public Color getColorOnPosition(Word word){
+        int positionX = word.getPositionX(); 
         int sectionWidth = 800/3;
 
-        if(position.x < sectionWidth){
+        if(positionX < sectionWidth){
             return leftColor;
-        } else if (position.x >= sectionWidth && position.x < 2 * sectionWidth) {
+        } else if (positionX >= sectionWidth && positionX < 2 * sectionWidth) {
             return middleColor;
         } else {
             return rightColor; 
@@ -161,8 +146,9 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public void updateWordPositions(List<Word> words){
-        if(wordPanel != null){
-            wordPanel.repaint();
+        if(drawPanel != null){
+            drawPanel.setWords(words);
+            drawPanel.repaint(); 
         }
     }
 }
