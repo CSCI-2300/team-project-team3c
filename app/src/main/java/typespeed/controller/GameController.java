@@ -11,13 +11,14 @@ import java.util.TimerTask;
 
 public class GameController{
     
-    private Timer wordTimer;
+    private Timer gameTimer;
     private GameModel gameModel; 
     private GameObserver view; 
 
     public GameController(List<String> wordList, GameObserver view){
         this.gameModel = new GameModel(wordList); 
         this.view = view; 
+        startGameTimer(); 
     }
 
     public void startGame(){
@@ -26,8 +27,24 @@ public class GameController{
         startWordMovement(); 
     }
 
+    private void startGameTimer() {
+        gameTimer = new Timer();
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                int gameTime = gameModel.getGameTime();
+                gameTime--;
+                gameModel.setGameTime(gameTime);
+                view.updateTimer(gameTime);
+                if (gameTime <= 0) {
+                    gameTimer.cancel();
+                    gameModel.endGame();
+                }
+            }
+        }, 0, 1000);
+    }
+
     private void startWordGeneration(){
-        wordTimer = new Timer(); 
+        Timer wordTimer = new Timer(); 
         wordTimer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
                 gameModel.generateWord(); 

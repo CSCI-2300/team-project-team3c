@@ -28,6 +28,12 @@ public class GameModel {
         words.clear(); //clear previous games words 
     }
 
+    public void endGame(){
+        gameTime = 0; 
+        score = 0;
+        words.clear(); 
+    }
+
     public void generateWord(){
         if(!wordList.isEmpty()){
             int randomIndex = (int)(Math.random() * wordList.size());
@@ -69,6 +75,10 @@ public class GameModel {
 
     public int getGameTime(){
         return gameTime;
+    }
+
+    public void setGameTime(int gameTime){
+        this.gameTime = gameTime; 
     }
 
 }
