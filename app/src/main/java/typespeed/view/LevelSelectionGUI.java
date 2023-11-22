@@ -15,11 +15,12 @@ public class LevelSelectionGUI{
     private List<String> wordList; 
     private FileHandler fileHandler;
 
-    public LevelSelectionGUI(GameModel gameModel){
-        this.gameModel = gameModel; 
+    public LevelSelectionGUI(){
         this.fileHandler = new FileHandler(); 
         String difficulty = "PlayEasy.txt";
         this.wordList = fileHandler.loadWords(difficulty);
+
+        this.gameModel = new GameModel(wordList); 
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -15,6 +15,8 @@ public class TypespeedGUI implements GameObserver{
     private JFrame mainFrame;
     private GameController controller; 
     private CustomDrawPanel drawPanel;
+    private GameModel gameModel; 
+    private List<String> wordList; 
 
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
@@ -49,6 +51,9 @@ public class TypespeedGUI implements GameObserver{
     }
 
     public TypespeedGUI(GameModel gameModel, String difficulty, List<String> wordList){
+        this.gameModel = gameModel; 
+        this.wordList = wordList; 
+        
         this.controller = new GameController(wordList, this);
         controller.startGame();  
 
