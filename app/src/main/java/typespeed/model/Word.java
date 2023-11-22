@@ -8,8 +8,8 @@ public class Word{
 
     public Word(String text){
         this.text = text;
-        positionX = 0; 
-        positionY = 0; 
+        positionX = 10; 
+        positionY = 20; 
         speed = 1;
     }
 
