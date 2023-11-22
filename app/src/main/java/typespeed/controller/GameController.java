@@ -49,7 +49,7 @@ public class GameController{
             public void run(){
                 gameModel.generateWord(); 
             }
-        }, 0, 5000);
+        }, 0, 3000); // every 3 second 
     }
 
     private void startWordMovement(){

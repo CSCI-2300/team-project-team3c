@@ -35,6 +35,9 @@ public class LevelSelectionGUI{
         JButton easyButton = new JButton("Play Easy Level"); 
         JButton difficultButton = new JButton("Play Difficult Level"); 
         
+        String easyDifficultyFilePath = "/Users/medhani/csci2300/team-project-team3c/app/src/main/java/typespeed/PlayEasy.txt"; 
+        String hardDifficultyFilePath = "/Users/medhani/csci2300/team-project-team3c/app/src/main/java/typespeed/PlayHard.txt"; 
+
         easyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 startGame("PlayEasy.txt");
@@ -57,10 +60,14 @@ public class LevelSelectionGUI{
     }
 
     private void startGame(String difficulty){
+        if (fileHandler.doesFileExist(difficulty)) {
         if(gameGUI != null){
             gameGUI.closeWindow(); 
         }
         gameGUI = new TypespeedGUI(gameModel, difficulty, wordList);
+        } else {
+            JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }
