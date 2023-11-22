@@ -1,13 +1,18 @@
 package typespeed;
 
-import typespeed.view.TypespeedGUI;
-import typespeed.controller.GameController; 
 import typespeed.view.LevelSelectionGUI; 
+import typespeed.model.GameModel; 
+import typespeed.view.TypespeedGUI;
+import java.util.List;  
 
 public class App {
     public static void main(String[] args) {
-        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI(); 
-        TypespeedGUI gui = new TypespeedGUI("PlayEasy"); 
-        //GameController controller = new GameController();
+        FileHandler fileHandler = new FileHandler();
+        String difficulty = "PlayEasy.txt";
+        List<String> wordList = fileHandler.loadWords(difficulty);
+        
+        GameModel model = new GameModel(wordList);
+        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI(model);
+        TypespeedGUI typespeedGUI = new TypespeedGUI(model, difficulty, wordList); 
     }
 }

@@ -1,8 +1,8 @@
 package typespeed.view;
 
 import typespeed.model.Word; 
-import java.awt.Point; 
 import java.util.List;
+import java.awt.Point; 
 
 public interface GameObserver{
     public void updateTimer(int time);

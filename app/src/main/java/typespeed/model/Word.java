@@ -1,30 +1,32 @@
 package typespeed.model;
 
-import typespeed.view.GameObserver;
-import java.awt.*;; 
-
-
-
 public class Word{
     private String text; 
-    private Point position; 
+    private int positionX; 
+    private int positionY; 
     private int speed; 
 
-    public Word(String text, Point position, int speed){
+    public Word(String text){
         this.text = text;
-        this.position = position; 
-        this.speed = speed; 
+        positionX = 0; 
+        positionY = 0; 
+        speed = 1;
     }
 
     public void updatePosition(){
-        position.x += speed; 
+        positionX += speed; 
     }
 
     public String getText(){
         return text; 
     }
 
-    public Point getPosition(){
-        return position; 
+    public int getPositionX(){
+        return positionX; 
     }
+
+    public int getPositionY(){
+        return positionY; 
+    }
+
 }

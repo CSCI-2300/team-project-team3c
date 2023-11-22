@@ -10,7 +10,7 @@ public class FileHandler {
     public List<String> loadWords(String filename){
         List<String> wordList = new ArrayList<>(); 
         try{
-            File file = new File("src/main/java/typespeed/" + filename);
+            File file = new File(filename);
             if (file.exists()){
                 Scanner scanner = new Scanner(file);
                 while(scanner.hasNextLine()){
