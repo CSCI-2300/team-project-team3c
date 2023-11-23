@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TypespeedGUI implements GameObserver{
 
@@ -33,7 +34,9 @@ public class TypespeedGUI implements GameObserver{
     private final Color rightColor = new Color(255, 0, 0); //Red
 
     class CustomDrawPanel extends JPanel{
-        List<Word> words = new ArrayList<>();
+        //List<Word> words = new ArrayList<>();
+        private List<Word> words = new CopyOnWriteArrayList<>();
+
 
         public CustomDrawPanel(){
             setPreferredSize(new Dimension(800,600));
@@ -48,7 +51,7 @@ public class TypespeedGUI implements GameObserver{
         @Override
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            for(Word word : words){
+            for(Word word : this.words){
                 g.setColor(getColorOnPosition(word));
                 g.drawString(word.getText(), word.getPositionX(), word.getPositionY());
             }
@@ -69,11 +72,15 @@ public class TypespeedGUI implements GameObserver{
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String typedWord = inputArea.getText().trim();
-                    controller.checkWord(typedWord);
+                    // Ensure that 'controller' is not null
+                    if (controller != null) {
+                        controller.checkWord(typedWord);
+                    }
                     inputArea.setText(""); 
                 }
             }
         });
+
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -162,16 +169,6 @@ public class TypespeedGUI implements GameObserver{
         return new Point(x,y);
     }
 
-    /*private void renderWords(Graphics g, List<Word> words){
-        Font font = new Font("Arial", Font.PLAIN, 20);
-        for (Word word : words) {
-            int x = word.getPositionX();
-            int y = word.getPositionY();
-
-            g.setFont(font);
-            g.drawString(word.getText(), x, y);
-        }
-    }*/
 
     public void updateWordPositions(List<Word> words){
         if(drawPanel != null){
@@ -180,16 +177,9 @@ public class TypespeedGUI implements GameObserver{
         }
     }
 
-    public void refreshDisplay() {
-        drawPanel.setWords(gameModel.getWords()); // Assuming you have a method in GameModel that returns the current list of words
-        drawPanel.repaint();
-    }
-
-    private void handleKeyTyped(KeyEvent e) {
-        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-            String typedWord = inputArea.getText().trim();
-            controller.checkWord(typedWord); 
-            inputArea.setText(""); 
-        }
+public void refreshDisplay() {
+    List<Word> words = controller.getCurrentWords(); 
+    drawPanel.setWords(words);
+    drawPanel.repaint();
     }
 }

@@ -82,4 +82,9 @@ public class GameModel {
         this.gameTime = gameTime; 
     }
 
+    public List<Word> getCurrentWords() {
+        return this.words;
+    }
+    
+
 }
