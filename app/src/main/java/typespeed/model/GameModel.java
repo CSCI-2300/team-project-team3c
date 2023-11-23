@@ -48,8 +48,9 @@ public class GameModel {
         while(iterator.hasNext()){
             Word word = iterator.next(); 
             word.updatePosition(); 
-            if(word.getPositionX() > 800){
+            if(word.getPositionX() >= 800){
                 iterator.remove(); //remove words that reach end
+                ++score;
             }
         }
     }
@@ -81,5 +82,10 @@ public class GameModel {
     public void setGameTime(int gameTime){
         this.gameTime = gameTime; 
     }
+
+    public List<Word> getCurrentWords() {
+        return this.words;
+    }
+    
 
 }

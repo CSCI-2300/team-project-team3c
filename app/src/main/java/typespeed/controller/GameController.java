@@ -3,6 +3,7 @@ package typespeed.controller;
 import typespeed.model.Word;
 import typespeed.model.GameModel; 
 import typespeed.view.GameObserver;
+import typespeed.view.TypespeedGUI;
 
 import java.util.ArrayList;
 import java.util.List; 
@@ -14,6 +15,7 @@ public class GameController{
     private Timer gameTimer;
     private GameModel gameModel; 
     private GameObserver view; 
+    private TypespeedGUI Tview;
 
     public GameController(List<String> wordList, GameObserver view){
         this.gameModel = new GameModel(wordList); 
@@ -62,8 +64,20 @@ public class GameController{
         }, 0, 100); 
     }
 
-    public void checkWord(String userInput){
-        gameModel.checkWord(userInput); 
-        view.updateAndShowScore(gameModel.getScore());
+    public List<Word> getCurrentWords(){
+        return gameModel.getCurrentWords();
+    }
+
+    public void checkWord(String userInput) {
+        if (gameModel != null) {
+            gameModel.checkWord(userInput);
+            view.updateAndShowScore(gameModel.getScore());
+            // Assuming 'refreshDisplay' is a method in TypespeedGUI that updates the UI
+            if (Tview != null) {
+                Tview.refreshDisplay();
+            }
+        } else {
+            System.out.println("GameModel is not initialized.");
+        }
     }
 }

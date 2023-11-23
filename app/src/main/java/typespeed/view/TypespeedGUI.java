@@ -10,6 +10,10 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public class TypespeedGUI implements GameObserver{
 
     private JFrame mainFrame;
@@ -18,15 +22,21 @@ public class TypespeedGUI implements GameObserver{
     private GameModel gameModel; 
     private List<String> wordList; 
 
+    private JTextArea inputArea;
+
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
     
+    //private String difficulty; 
+
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
     private final Color rightColor = new Color(255, 0, 0); //Red
 
     class CustomDrawPanel extends JPanel{
-        List<Word> words = new ArrayList<>();
+        //List<Word> words = new ArrayList<>();
+        private List<Word> words = new CopyOnWriteArrayList<>();
+
 
         public CustomDrawPanel(){
             setPreferredSize(new Dimension(800,600));
@@ -41,7 +51,7 @@ public class TypespeedGUI implements GameObserver{
         @Override
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            for(Word word : words){
+            for(Word word : this.words){
                 g.setColor(getColorOnPosition(word));
                 g.drawString(word.getText(), word.getPositionX(), word.getPositionY());
             }
@@ -51,9 +61,26 @@ public class TypespeedGUI implements GameObserver{
     public TypespeedGUI(GameModel gameModel, String difficulty, List<String> wordList){
         this.gameModel = gameModel; 
         this.wordList = wordList; 
-        
         this.controller = new GameController(wordList, this);
-        controller.startGame();  
+        controller.startGame(); 
+
+        
+        inputArea = new JTextArea();
+        inputArea.requestFocusInWindow();
+        inputArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    String typedWord = inputArea.getText().trim();
+                    // Ensure that 'controller' is not null
+                    if (controller != null) {
+                        controller.checkWord(typedWord);
+                    }
+                    inputArea.setText(""); 
+                }
+            }
+        });
+
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +104,11 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
         bottomPanel.add(timeLabel);
+
+        inputArea.setEnabled(true);
+        inputArea.setEditable(true);
+
+        mainFrame.add(inputArea, BorderLayout.NORTH);
         mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
@@ -137,21 +169,17 @@ public class TypespeedGUI implements GameObserver{
         return new Point(x,y);
     }
 
-    private void renderWords(Graphics g, List<Word> words){
-        Font font = new Font("Arial", Font.PLAIN, 20);
-        for (Word word : words) {
-            int x = word.getPositionX();
-            int y = word.getPositionY();
-
-            g.setFont(font);
-            g.drawString(word.getText(), x, y);
-        }
-    }
 
     public void updateWordPositions(List<Word> words){
         if(drawPanel != null){
             drawPanel.setWords(words);
             drawPanel.repaint(); 
         }
+    }
+
+public void refreshDisplay() {
+    List<Word> words = controller.getCurrentWords(); 
+    drawPanel.setWords(words);
+    drawPanel.repaint();
     }
 }
