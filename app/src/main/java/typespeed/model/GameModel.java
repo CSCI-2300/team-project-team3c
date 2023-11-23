@@ -36,10 +36,12 @@ public class GameModel {
     }
 
     public void generateWord(){
-        if(!wordList.isEmpty()){
+        if(gameTime > 0 && !wordList.isEmpty()){
             int randomIndex = (int)(Math.random() * wordList.size());
             String wordText = wordList.get(randomIndex); //getting word from the random index in list
             words.add(new Word(wordText));
+        } else {
+            endGame(); 
         }
     }
 
@@ -53,7 +55,6 @@ public class GameModel {
             }
         }
     
-        // Remove the words after iterating
         words.removeAll(wordsToRemove);
     }
 
