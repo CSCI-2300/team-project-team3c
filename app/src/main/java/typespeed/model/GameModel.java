@@ -47,8 +47,9 @@ public class GameModel {
         while(iterator.hasNext()){
             Word word = iterator.next(); 
             word.updatePosition(); 
-            if(word.getPositionX() > 800){
+            if(word.getPositionX() >= 800){
                 iterator.remove(); //remove words that reach end
+                ++score;
             }
         }
     }

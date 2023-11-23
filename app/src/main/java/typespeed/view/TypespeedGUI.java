@@ -10,6 +10,9 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 public class TypespeedGUI implements GameObserver{
 
     private JFrame mainFrame;
@@ -18,9 +21,13 @@ public class TypespeedGUI implements GameObserver{
     private GameModel gameModel; 
     private List<String> wordList; 
 
+    //private JTextArea inputArea;
+
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
     
+    //private String difficulty; 
+
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
     private final Color rightColor = new Color(255, 0, 0); //Red
@@ -53,7 +60,13 @@ public class TypespeedGUI implements GameObserver{
         this.wordList = wordList; 
         
         this.controller = new GameController(wordList, this);
-        controller.startGame();  
+        controller.startGame(); 
+        /*inputArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                handleKeyTyped(e);
+            }
+        });*/
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +90,8 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
         bottomPanel.add(timeLabel);
+
+        //mainFrame.add(inputArea, BorderLayout.NORTH);
         mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
@@ -154,4 +169,32 @@ public class TypespeedGUI implements GameObserver{
             drawPanel.repaint(); 
         }
     }
+
+    /*private void handleKeyTyped(KeyEvent e) {
+        if (e.getKeyChar() == '\n') {
+            String typedWord = inputArea.getText().trim();
+            inputArea.setText(""); 
+            controller.checkWord(typedWord); 
+        }
+    }*/
+
+    /*@Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        if (gameModel.checkWord(null) == wordList;){ 
+
+        }*/
+
+   /*@Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+    } */
+
+
+    /*@Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+    }*/
 }
