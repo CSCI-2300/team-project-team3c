@@ -35,9 +35,6 @@ public class LevelSelectionGUI{
         JButton easyButton = new JButton("Play Easy Level"); 
         JButton difficultButton = new JButton("Play Difficult Level"); 
         
-        String easyDifficultyFilePath = "/Users/medhani/csci2300/team-project-team3c/app/src/main/java/typespeed/PlayEasy.txt"; 
-        String hardDifficultyFilePath = "/Users/medhani/csci2300/team-project-team3c/app/src/main/java/typespeed/PlayHard.txt"; 
-
         easyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 startGame("PlayEasy.txt");
