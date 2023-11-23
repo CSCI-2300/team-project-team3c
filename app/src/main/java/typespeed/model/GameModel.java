@@ -1,14 +1,14 @@
 package typespeed.model; 
 
 import java.util.ArrayList; 
-import java.util.Iterator; 
 import java.util.List; 
 import java.util.Random; 
+import java.util.concurrent.CopyOnWriteArrayList; 
 
 public class GameModel {
     private int gameTime; 
     private int score; 
-    private List<Word> words = new ArrayList<>(); 
+    private List<Word> words = new CopyOnWriteArrayList<>(); 
     private List<String> wordList; 
 
     public GameModel(List<String> wordList){
@@ -44,25 +44,26 @@ public class GameModel {
     }
 
     public void moveWords(){
-        Iterator<Word> iterator = words.iterator();
-        while(iterator.hasNext()){
-            Word word = iterator.next(); 
-            word.updatePosition(); 
-            if(word.getPositionX() >= 800){
-                iterator.remove(); //remove words that reach end
+        List<Word> wordsToRemove = new ArrayList<>();
+        for (Word word : words) {
+            word.updatePosition();
+            if (word.getPositionX() >= 800) {
+                wordsToRemove.add(word);
                 ++score;
             }
         }
+    
+        // Remove the words after iterating
+        words.removeAll(wordsToRemove);
     }
 
     public void checkWord(String userInput){
-        Iterator<Word> iterator = words.iterator();
-        while(iterator.hasNext()){
-            Word word = iterator.next(); 
-            if(word.getText().equalsIgnoreCase(userInput)){
-                iterator.remove(); 
-                score++; 
-                return; 
+        for (int i = words.size() - 1; i >= 0; i--) {
+            Word word = words.get(i);
+            if (word.getText().equalsIgnoreCase(userInput)) {
+                words.remove(i);
+                score++;
+                return;
             }
         }
     }
