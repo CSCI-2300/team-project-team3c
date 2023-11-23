@@ -21,8 +21,6 @@ public class TypespeedGUI implements GameObserver{
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
     
-    //private String difficulty; 
-
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
     private final Color rightColor = new Color(255, 0, 0); //Red

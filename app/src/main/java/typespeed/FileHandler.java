@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 public class FileHandler {
     public List<String> loadWords(String filename){
         List<String> wordList = new ArrayList<>(); 
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         try{
             File file = new File(filename);
             if (file.exists()){
