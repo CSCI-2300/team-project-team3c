@@ -3,6 +3,7 @@ package typespeed.controller;
 import typespeed.model.Word;
 import typespeed.model.GameModel; 
 import typespeed.view.GameObserver;
+import typespeed.view.TypespeedGUI;
 
 import java.util.ArrayList;
 import java.util.List; 
@@ -14,6 +15,7 @@ public class GameController{
     private Timer gameTimer;
     private GameModel gameModel; 
     private GameObserver view; 
+    private TypespeedGUI Tview;
 
     public GameController(List<String> wordList, GameObserver view){
         this.gameModel = new GameModel(wordList); 
@@ -65,5 +67,6 @@ public class GameController{
     public void checkWord(String userInput){
         gameModel.checkWord(userInput); 
         view.updateAndShowScore(gameModel.getScore());
+        Tview.refreshDisplay();
     }
 }

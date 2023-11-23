@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.KeyAdapter;
 
 public class TypespeedGUI implements GameObserver{
 
@@ -21,7 +21,7 @@ public class TypespeedGUI implements GameObserver{
     private GameModel gameModel; 
     private List<String> wordList; 
 
-    //private JTextArea inputArea;
+    private JTextArea inputArea;
 
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
@@ -58,15 +58,22 @@ public class TypespeedGUI implements GameObserver{
     public TypespeedGUI(GameModel gameModel, String difficulty, List<String> wordList){
         this.gameModel = gameModel; 
         this.wordList = wordList; 
-        
         this.controller = new GameController(wordList, this);
         controller.startGame(); 
-        /*inputArea.addKeyListener(new KeyAdapter() {
+
+        
+        inputArea = new JTextArea();
+        inputArea.requestFocusInWindow();
+        inputArea.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                handleKeyTyped(e);
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    String typedWord = inputArea.getText().trim();
+                    controller.checkWord(typedWord);
+                    inputArea.setText(""); 
+                }
             }
-        });*/
+        });
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,7 +98,10 @@ public class TypespeedGUI implements GameObserver{
         bottomPanel.add(missedLabel);
         bottomPanel.add(timeLabel);
 
-        //mainFrame.add(inputArea, BorderLayout.NORTH);
+        inputArea.setEnabled(true);
+        inputArea.setEditable(true);
+
+        mainFrame.add(inputArea, BorderLayout.NORTH);
         mainFrame.add(bottomPanel, BorderLayout.SOUTH);
 
         mainFrame.pack();
@@ -152,7 +162,7 @@ public class TypespeedGUI implements GameObserver{
         return new Point(x,y);
     }
 
-    private void renderWords(Graphics g, List<Word> words){
+    /*private void renderWords(Graphics g, List<Word> words){
         Font font = new Font("Arial", Font.PLAIN, 20);
         for (Word word : words) {
             int x = word.getPositionX();
@@ -161,7 +171,7 @@ public class TypespeedGUI implements GameObserver{
             g.setFont(font);
             g.drawString(word.getText(), x, y);
         }
-    }
+    }*/
 
     public void updateWordPositions(List<Word> words){
         if(drawPanel != null){
@@ -170,31 +180,16 @@ public class TypespeedGUI implements GameObserver{
         }
     }
 
-    /*private void handleKeyTyped(KeyEvent e) {
-        if (e.getKeyChar() == '\n') {
+    public void refreshDisplay() {
+        drawPanel.setWords(gameModel.getWords()); // Assuming you have a method in GameModel that returns the current list of words
+        drawPanel.repaint();
+    }
+
+    private void handleKeyTyped(KeyEvent e) {
+        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
             String typedWord = inputArea.getText().trim();
-            inputArea.setText(""); 
             controller.checkWord(typedWord); 
+            inputArea.setText(""); 
         }
-    }*/
-
-    /*@Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        if (gameModel.checkWord(null) == wordList;){ 
-
-        }*/
-
-   /*@Override
-    public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
-    } */
-
-
-    /*@Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
-    }*/
+    }
 }
