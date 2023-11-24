@@ -1,90 +1,91 @@
-package typespeed.model; 
+package typespeed.model;
 
-import java.util.ArrayList; 
-import java.util.Iterator; 
-import java.util.List; 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class GameModel {
-    private int gameTime; 
-    private int score; 
-    private List<Word> words = new ArrayList<>(); 
-    private List<String> wordList; 
+import typespeed.IGameModel;
 
-    public GameModel(List<String> wordList){
-        this.wordList = wordList; 
+public class GameModel implements IGameModel {
+    private int gameTime;
+    private int score;
+    private List<Word> words = new ArrayList<>();
+    private List<String> wordList;
+
+    public GameModel(List<String> wordList) {
+        this.wordList = wordList;
     }
 
-    public int getPositionX(Word word){
-        return word.getPositionX(); 
-    }
-
-    public int getPositionY(Word word){
-        return word.getPositionY(); 
-    }
-
-    public void startGame(){
-        gameTime = 60; 
-        score = 0; 
-        words.clear(); //clear previous games words 
-    }
-
-    public void endGame(){
-        gameTime = 0; 
+    @Override
+    public void startGame() {
+        gameTime = 60;
         score = 0;
-        words.clear(); 
+        words.clear();
     }
 
-    public void generateWord(){
-        if(!wordList.isEmpty()){
-            int randomIndex = (int)(Math.random() * wordList.size());
-            String wordText = wordList.get(randomIndex); //getting word from the random index in list
-            words.add(new Word(wordText));
+    @Override
+    public void endGame() {
+        gameTime = 0;
+        words.clear();
+    }
+
+    @Override
+    public void generateWord() {
+        if (!wordList.isEmpty()) {
+            int randomIndex = (int) (Math.random() * wordList.size());
+            String wordText = wordList.get(randomIndex);
+            words.add(new Word(wordText, randomIndex));
         }
     }
 
-    public void moveWords(){
+    @Override
+    public void moveWords() {
         Iterator<Word> iterator = words.iterator();
-        while(iterator.hasNext()){
-            Word word = iterator.next(); 
-            word.updatePosition(); 
-            if(word.getPositionX() >= 800){
-                iterator.remove(); //remove words that reach end
-                ++score;
+        while (iterator.hasNext()) {
+            Word word = iterator.next();
+            word.updatePosition();
+            if (word.getPositionX() >= 800) {
+                iterator.remove(); // remove words that reach the end
             }
         }
     }
 
-    public void checkWord(String userInput){
+    @Override
+    public void checkWord(String userInput) {
         Iterator<Word> iterator = words.iterator();
-        while(iterator.hasNext()){
-            Word word = iterator.next(); 
-            if(word.getText().equalsIgnoreCase(userInput)){
-                iterator.remove(); 
-                score++; 
-                return; 
+        while (iterator.hasNext()) {
+            Word word = iterator.next();
+            if (word.getText().equalsIgnoreCase(userInput)) {
+                iterator.remove();
+                score++;
+                return;
             }
         }
     }
 
-    public int getScore(){
-        return score; 
+    @Override
+    public int getScore() {
+        return score;
     }
 
-    public List<Word> getWords(){
-        return words;
+    @Override
+    public List<Word> getWords() {
+        return new ArrayList<>(words);
     }
 
-    public int getGameTime(){
+    @Override
+    public int getGameTime() {
         return gameTime;
     }
 
-    public void setGameTime(int gameTime){
-        this.gameTime = gameTime; 
+    @Override
+    public void setGameTime(int gameTime) {
+        this.gameTime = gameTime;
     }
 
+    @Override
     public List<Word> getCurrentWords() {
-        return this.words;
+        return words;
     }
-    
-
 }
+

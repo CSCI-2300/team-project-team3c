@@ -1,40 +1,35 @@
-package typespeed.view; 
+package typespeed.view;
 
-import typespeed.model.Word; 
-import typespeed.model.GameModel;
+import typespeed.model.Word;
+import typespeed.IGameModel;
 import typespeed.controller.GameController;
+import typespeed.view.IGameView;
 
-import javax.swing.*; 
+import javax.swing.*;
 import java.awt.*;
-import java.util.Random; 
-import java.util.List;
-import java.util.ArrayList;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TypespeedGUI implements GameObserver{
+public class TypespeedGUI implements IGameView{
 
     private JFrame mainFrame;
     private GameController controller; 
     private CustomDrawPanel drawPanel;
-    private GameModel gameModel; 
-    private List<String> wordList; 
+    private IGameModel gameModel;  
 
     private JTextArea inputArea;
-
     private JLabel scoreLabel, levelTypeLabel, missedLabel, timeLabel; 
     private JPanel bottomPanel; 
     
-    //private String difficulty; 
-
     private final Color leftColor = new Color(0, 255, 0); //Green
     private final Color middleColor = new Color(255, 255, 0); //Yellow
     private final Color rightColor = new Color(255, 0, 0); //Red
 
+
     class CustomDrawPanel extends JPanel{
-        //List<Word> words = new ArrayList<>();
         private List<Word> words = new CopyOnWriteArrayList<>();
 
 
@@ -58,13 +53,16 @@ public class TypespeedGUI implements GameObserver{
         }
     }
 
-    public TypespeedGUI(GameModel gameModel, String difficulty, List<String> wordList){
+    public TypespeedGUI(IGameModel gameModel, String difficulty){
         this.gameModel = gameModel; 
-        this.wordList = wordList; 
-        this.controller = new GameController(wordList, this);
-        controller.startGame(); 
-
+        this.controller = new GameController(gameModel, this);
         
+        initializeComponents(difficulty);
+        controller.startGame();
+    }
+
+
+    private void initializeComponents(String difficulty){
         inputArea = new JTextArea();
         inputArea.requestFocusInWindow();
         inputArea.addKeyListener(new KeyAdapter() {
@@ -72,15 +70,11 @@ public class TypespeedGUI implements GameObserver{
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String typedWord = inputArea.getText().trim();
-                    // Ensure that 'controller' is not null
-                    if (controller != null) {
-                        controller.checkWord(typedWord);
-                    }
-                    inputArea.setText(""); 
+                    controller.checkWord(typedWord);
+                    inputArea.setText("");
                 }
             }
         });
-
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,10 +107,12 @@ public class TypespeedGUI implements GameObserver{
 
         mainFrame.pack();
         mainFrame.setVisible(true);
-
-        controller.startGame(); 
     }
 
+        @Override
+        public void updateWordPositions(List<Word> words){
+            drawPanel.setWords(words);
+        }
 
     public Color getColorOnPosition(Word word){
         int positionX = word.getPositionX(); 
@@ -170,16 +166,18 @@ public class TypespeedGUI implements GameObserver{
     }
 
 
-    public void updateWordPositions(List<Word> words){
+/*    public void updateWordPositions(List<Word> words){
         if(drawPanel != null){
             drawPanel.setWords(words);
             drawPanel.repaint(); 
         }
-    }
+    }*/
 
-public void refreshDisplay() {
+public void refreshDisplay(){
     List<Word> words = controller.getCurrentWords(); 
     drawPanel.setWords(words);
     drawPanel.repaint();
-    }
 }
+}
+
+

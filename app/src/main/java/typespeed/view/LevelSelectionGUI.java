@@ -16,11 +16,11 @@ public class LevelSelectionGUI{
     private FileHandler fileHandler;
 
     public LevelSelectionGUI(){
-        this.fileHandler = new FileHandler(); 
+        this.fileHandler = new FileHandler(); // Ensure this is properly initialized
         String difficulty = "PlayEasy.txt";
         this.wordList = fileHandler.loadWords(difficulty);
-
-        this.gameModel = new GameModel(wordList); 
+    
+        this.gameModel = new GameModel(wordList);
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,38 +34,28 @@ public class LevelSelectionGUI{
         JPanel bottomPanel = new JPanel(new GridLayout(2, 1, 10, 10)); 
         JButton easyButton = new JButton("Play Easy Level"); 
         JButton difficultButton = new JButton("Play Difficult Level"); 
-        
-        easyButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                startGame("PlayEasy.txt");
-            }
-        }); 
 
-        difficultButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                startGame("PlayHard.txt");
-            }
-        });
+        easyButton.addActionListener(e -> startGame("PlayEasy.txt"));
+        difficultButton.addActionListener(e -> startGame("PlayHard.txt"));
 
         bottomPanel.add(easyButton);
         bottomPanel.add(difficultButton);
 
         mainFrame.add(bottomPanel, BorderLayout.CENTER);
 
-        mainFrame.pack(); 
+        mainFrame.pack();
         mainFrame.setVisible(true);
     }
 
-    private void startGame(String difficulty){
-        if (fileHandler.doesFileExist(difficulty)) {
+private void startGame(String difficulty){
+    if (fileHandler.doesFileExist(difficulty)) {
         if(gameGUI != null){
             gameGUI.closeWindow(); 
         }
         List<String> selectedWordList = fileHandler.loadWords(difficulty);
-        gameGUI = new TypespeedGUI(gameModel, difficulty, selectedWordList);
-        } else {
-            JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        gameGUI = new TypespeedGUI(gameModel, difficulty);
+    } else {
+        JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
+}
 }

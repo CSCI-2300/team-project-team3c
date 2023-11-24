@@ -1,6 +1,7 @@
 package typespeed.controller;
 
 import typespeed.model.Word;
+import typespeed.IGameModel;
 import typespeed.model.GameModel; 
 import typespeed.view.GameObserver;
 import typespeed.view.TypespeedGUI;
@@ -10,16 +11,18 @@ import java.util.List;
 import java.util.Timer; 
 import java.util.TimerTask;  
 
-public class GameController{
-    
-    private Timer gameTimer;
-    private GameModel gameModel; 
-    private GameObserver view; 
-    private TypespeedGUI Tview;
+import typespeed.view.IGameView;
 
-    public GameController(List<String> wordList, GameObserver view){
-        this.gameModel = new GameModel(wordList); 
-        this.view = view; 
+public class GameController{
+    private final IGameModel gameModel;
+    private final IGameView gameView;
+
+
+    private Timer gameTimer;
+
+    public GameController(IGameModel gameModel, IGameView gameView){
+        this.gameModel = gameModel; 
+        this.gameView = gameView; 
         startGameTimer(); 
     }
 
@@ -36,7 +39,7 @@ public class GameController{
                 int gameTime = gameModel.getGameTime();
                 gameTime--;
                 gameModel.setGameTime(gameTime);
-                view.updateTimer(gameTime);
+                gameView.updateTimer(gameTime);
                 if (gameTime <= 0) {
                     gameTimer.cancel();
                     gameModel.endGame();
@@ -59,7 +62,7 @@ public class GameController{
         wordMovementTimer.scheduleAtFixedRate(new TimerTask(){
             public void run(){
                 gameModel.moveWords(); 
-                view.updateWordPositions(gameModel.getWords());
+                gameView.updateWordPositions(gameModel.getWords());
             }
         }, 0, 100); 
     }
@@ -69,15 +72,7 @@ public class GameController{
     }
 
     public void checkWord(String userInput) {
-        if (gameModel != null) {
-            gameModel.checkWord(userInput);
-            view.updateAndShowScore(gameModel.getScore());
-            // Assuming 'refreshDisplay' is a method in TypespeedGUI that updates the UI
-            if (Tview != null) {
-                Tview.refreshDisplay();
-            }
-        } else {
-            System.out.println("GameModel is not initialized.");
-        }
+        gameModel.checkWord(userInput);
+        gameView.updateAndShowScore(gameModel.getScore());
     }
 }
