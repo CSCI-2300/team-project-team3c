@@ -41,6 +41,7 @@ public class GameModel implements IGameModel {
     @Override
     public void moveWords() {
         Iterator<Word> iterator = words.iterator();
+        List<Word> wordsToRemove = new ArrayList<>();
         while (iterator.hasNext()) {
             Word word = iterator.next();
             word.updatePosition();
@@ -48,6 +49,8 @@ public class GameModel implements IGameModel {
                 iterator.remove(); // remove words that reach the end
             }
         }
+    
+        words.removeAll(wordsToRemove);
     }
 
     @Override
