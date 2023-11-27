@@ -32,4 +32,12 @@ Some Tasks to Handle:
 - Keep track of words correctly typed
 - Keep track of words uncorrectly typed
 
+
+Deliverable 3:
+- Implement End Game Panel
+    - Save User's previous score
+- Fix the Timer and Words Missed Counter
+- Word Speed
+- Implement Medium Difficulty
+
     
