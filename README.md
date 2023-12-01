@@ -36,8 +36,14 @@ Some Tasks to Handle:
 Deliverable 3:
 - Implement End Game Panel
     - Save User's previous score
-- Fix the Timer and Words Missed Counter
+- Fix the Timer 
+- Fix Words Missed Counter
 - Word Speed
 - Implement Medium Difficulty
+
+- Unit Tests
+
+- Make sure words don't overlap each other
+- Make sure same word doesnt appear at the same time
 
     
