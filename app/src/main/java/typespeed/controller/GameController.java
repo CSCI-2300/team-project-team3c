@@ -39,11 +39,12 @@ public class GameController{
                 int gameTime = gameModel.getGameTime();
                 gameTime--;
                 gameModel.setGameTime(gameTime);
-                gameView.updateTimer(gameTime);
+                //gameView.updateTimer(gameTime);
                 if (gameTime <= 0) {
                     gameTimer.cancel();
                     gameModel.endGame();
                 }
+                gameView.updateTimer(gameTime);
             }
         }, 0, 1000);
     }
@@ -64,7 +65,7 @@ public class GameController{
                 gameModel.moveWords(); 
                 gameView.updateWordPositions(gameModel.getWords());
             }
-        }, 0, 100); 
+        }, 0, 300); 
     }
 
     public List<Word> getCurrentWords(){
