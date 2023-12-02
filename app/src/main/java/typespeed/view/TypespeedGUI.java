@@ -156,11 +156,13 @@ public class TypespeedGUI extends JFrame implements IGameView{
 
     public void displayGameOver() {
         EndGamePanel endGamePanel = new EndGamePanel(gameModel.getScore(), e -> restartGame());
-        mainFrame.setContentPane(endGamePanel);
-        mainFrame.revalidate();
-        mainFrame.repaint();
-    }
-    
+        mainFrame.getContentPane().removeAll(); 
+        mainFrame.add(endGamePanel);
+        mainFrame.revalidate(); 
+
+        resetView(); 
+        mainFrame.setVisible(true);
+    }    
 
     private void restartGame() {
         System.out.println("restartGame Method called");
@@ -176,7 +178,6 @@ public class TypespeedGUI extends JFrame implements IGameView{
         inputArea.setText("");
         drawPanel.setWords(new ArrayList<>());
         drawPanel.repaint();
-       // inputArea.requestFocusInWindow();
 
     }
 

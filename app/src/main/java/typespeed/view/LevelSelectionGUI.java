@@ -55,6 +55,7 @@ private void startGame(String difficulty){
             gameGUI.closeWindow(); 
         }
         gameGUI = new TypespeedGUI(gameModel, difficulty);
+        mainFrame.setVisible(false);
     } else {
         JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
     }

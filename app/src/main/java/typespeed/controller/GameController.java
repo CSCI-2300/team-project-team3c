@@ -16,6 +16,7 @@ import typespeed.view.IGameView;
 public class GameController{
     private final IGameModel gameModel;
     private final IGameView gameView;
+    private boolean isGameRunning; 
 
 
     private Timer gameTimer;
@@ -23,6 +24,7 @@ public class GameController{
     public GameController(IGameModel gameModel, IGameView gameView){
         this.gameModel = gameModel; 
         this.gameView = gameView; 
+        this.isGameRunning = false; 
         startGameTimer(); 
     }
 
@@ -31,10 +33,12 @@ public class GameController{
         startWordGeneration(); 
         startWordMovement(); 
         startGameTimer();
+        isGameRunning = true; 
     }
 
     public void restartGame(){
         gameModel.startGame();
+        isGameRunning = true; 
     }
 
     private void startGameTimer() {
@@ -50,10 +54,15 @@ public class GameController{
                 if (gameTime <= 0) {
                     gameTimer.cancel();
                     gameModel.endGame();
+                    isGameRunning = false; 
                     gameView.displayGameOver(); // Display the endgame panel
                 }
             }
         }, 0, 1000);
+    }
+
+    public boolean isGameRunning(){
+        return isGameRunning; 
     }
     
 

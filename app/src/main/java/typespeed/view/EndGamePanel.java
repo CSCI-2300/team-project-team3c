@@ -1,9 +1,7 @@
 package typespeed.view;
-
-import javax.swing.*;
-
 import typespeed.controller.GameController;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,15 +16,15 @@ public class EndGamePanel extends JPanel{
         initializePanel();
     }
 
-        private void initializePanel(){
-            setLayout(new BorderLayout());
-            System.out.println("TOOL_TIP_TEXT_KEY");
-            
-            JLabel scoreLabel = new JLabel("Your score: " +finalscore, SwingConstants.CENTER);
-            add(scoreLabel, BorderLayout.CENTER);
+    private void initializePanel(){
+        setPreferredSize(new Dimension(400, 300));
+        setLayout(new BorderLayout());
 
-            JButton restartButton = new JButton("Restart?");
-            restartButton.addActionListener(restartAction);
-            add(restartButton, BorderLayout.SOUTH);
-        }
+        JLabel scoreLabel = new JLabel("Your score: " +finalscore, SwingConstants.CENTER);
+        add(scoreLabel, BorderLayout.CENTER);
+
+        JButton restartButton = new JButton("Play Again?");
+        restartButton.addActionListener(restartAction);
+        add(restartButton, BorderLayout.SOUTH);
     }
+}
