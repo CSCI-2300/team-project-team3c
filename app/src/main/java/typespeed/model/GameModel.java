@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import typespeed.IGameModel;
 
 public class GameModel implements IGameModel {
@@ -12,6 +15,8 @@ public class GameModel implements IGameModel {
     private List<Word> words = new ArrayList<>();
     private List<String> wordList;
     private int missedWordsCount; 
+    private Set<String> activeWords = new HashSet<>();
+
 
     public GameModel(List<String> wordList) {
         this.wordList = wordList;
@@ -34,12 +39,33 @@ public class GameModel implements IGameModel {
     @Override
     public void generateWord() {
         if (!wordList.isEmpty()) {
-            int randomIndex = (int) (Math.random() * wordList.size());
-            String wordText = wordList.get(randomIndex);
-            words.add(new Word(wordText));
-        } else {
+            String wordText;
+            do {
+                int randomIndex = (int) (Math.random() * wordList.size());
+                wordText = wordList.get(randomIndex);
+            } while (activeWords.contains(wordText));
+
+            Word newWord = new Word(wordText);
+            if (!isOverlapping(newWord)) {
+                words.add(newWord);
+                activeWords.add(wordText);
+            }
+        } else{
             endGame(); 
         }
+    }
+
+    private boolean isOverlapping(Word newWord) {
+        for (Word word : words) {
+            if (Math.abs(word.getPositionY() - newWord.getPositionY()) < 60) {
+                return true; // Found an overlapping word
+            }
+        }
+        return false;
+    }
+
+    public void removeActiveWord(String wordText) {
+        activeWords.remove(wordText);
     }
 
     @Override
