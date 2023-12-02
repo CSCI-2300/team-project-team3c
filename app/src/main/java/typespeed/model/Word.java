@@ -6,19 +6,18 @@ public class Word{
     private String text; 
     private int positionX; 
     private int positionY; 
-    private int speed; 
+    private static int SPEED = 5; 
     private static final Random rand = new Random();
     private static final int MAX_X = 800;
 
-    public Word(String text, int speed){
+    public Word(String text){
         this.text = text;
-        this.speed = speed;
         positionX = rand.nextInt(200); 
         positionY = rand.nextInt(550) + 50; 
     }
 
     public void updatePosition(){
-        positionX += speed; 
+        positionX += SPEED; 
         if (positionX > MAX_X){
             positionX = MAX_X;
         }
