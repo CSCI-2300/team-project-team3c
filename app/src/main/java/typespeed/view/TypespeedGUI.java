@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.util.List;
+import java.util.ArrayList; 
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -56,7 +57,7 @@ public class TypespeedGUI implements IGameView{
     public TypespeedGUI(IGameModel gameModel, String difficulty){
         this.gameModel = gameModel; 
         this.controller = new GameController(gameModel, this);
-        
+
         initializeComponents(difficulty);
         controller.startGame();
     }
@@ -165,13 +166,6 @@ public class TypespeedGUI implements IGameView{
         return new Point(x,y);
     }
 
-
-/*    public void updateWordPositions(List<Word> words){
-        if(drawPanel != null){
-            drawPanel.setWords(words);
-            drawPanel.repaint(); 
-        }
-    }*/
 
 public void refreshDisplay(){
     List<Word> words = controller.getCurrentWords(); 

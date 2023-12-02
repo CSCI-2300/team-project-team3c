@@ -37,6 +37,8 @@ public class GameModel implements IGameModel {
             int randomIndex = (int) (Math.random() * wordList.size());
             String wordText = wordList.get(randomIndex);
             words.add(new Word(wordText));
+        } else {
+            endGame(); 
         }
     }
 

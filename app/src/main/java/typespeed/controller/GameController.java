@@ -30,6 +30,7 @@ public class GameController{
         gameModel.startGame(); 
         startWordGeneration(); 
         startWordMovement(); 
+        startGameTimer();
     }
 
     private void startGameTimer() {
@@ -42,8 +43,8 @@ public class GameController{
                 if (gameTime <= 0) {
                     gameTimer.cancel();
                     gameModel.endGame();
-                }
-                gameView.updateTimer(gameTime);
+                } 
+                gameView.updateTimer(gameTime);   
             }
         }, 0, 1000);
     }
