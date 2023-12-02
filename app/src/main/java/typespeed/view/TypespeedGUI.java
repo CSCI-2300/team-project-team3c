@@ -85,18 +85,16 @@ public class TypespeedGUI implements IGameView{
         mainFrame.add(drawPanel, BorderLayout.CENTER);
 
         bottomPanel = new JPanel(); 
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
         
-        
-        scoreLabel = new JLabel("Score: 0     ");
-        levelTypeLabel = new JLabel("Level: " + difficulty +"     ");
-        missedLabel = new JLabel("Words Missed: 0     ");
-        timeLabel = new JLabel("Time: 0 sec     ");
+        levelTypeLabel = new JLabel("Level: " + difficulty);
+        missedLabel = new JLabel("Words Missed: 0");
+        scoreLabel = new JLabel("Score: 0");
+        timeLabel = new JLabel("Time: 0 sec");
 
-
-        bottomPanel.add(scoreLabel);
         bottomPanel.add(levelTypeLabel);
         bottomPanel.add(missedLabel);
+        bottomPanel.add(scoreLabel);
         bottomPanel.add(timeLabel);
 
         inputArea.setEnabled(true);
