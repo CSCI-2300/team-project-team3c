@@ -10,10 +10,12 @@ public class Word{
     private static final Random rand = new Random();
     private static final int MAX_X = 800;
 
+    private static final int MIN_Y = 250;
+    private static final int MAX_Y = 575;
     public Word(String text){
         this.text = text;
         positionX = rand.nextInt(200); 
-        positionY = rand.nextInt(550) + 50; 
+        positionY = rand.nextInt(MAX_Y - MIN_Y + 1) + MIN_Y;
     }
 
     public void updatePosition(){

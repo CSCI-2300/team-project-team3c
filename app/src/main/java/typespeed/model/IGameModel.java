@@ -16,4 +16,5 @@ public interface IGameModel{
     int getScore();
 	List<Word> getWords();
     int getMissedWordsCount(); 
+    boolean isGameOver();
 }

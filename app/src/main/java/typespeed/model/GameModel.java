@@ -37,7 +37,16 @@ public class GameModel implements IGameModel {
     }
 
     @Override
+    public boolean isGameOver(){
+        return gameTime <= 0;
+    }
+
+
+    @Override
     public void generateWord() {
+        if (isGameOver()){
+            return;
+        }
         if (!wordList.isEmpty()) {
             String wordText;
             do {
@@ -55,10 +64,10 @@ public class GameModel implements IGameModel {
         }
     }
 
-    private boolean isOverlapping(Word newWord) {
+    public boolean isOverlapping(Word newWord) {
         for (Word word : words) {
             if (Math.abs(word.getPositionY() - newWord.getPositionY()) < 60) {
-                return true; // Found an overlapping word
+                return true; 
             }
         }
         return false;
@@ -76,7 +85,7 @@ public class GameModel implements IGameModel {
             Word word = iterator.next();
             word.updatePosition();
             if (word.getPositionX() >= 800) {
-                iterator.remove(); // remove words that reach the end
+                iterator.remove(); 
                 missedWordsCount++; 
             }
         }

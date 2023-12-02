@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TypespeedGUI implements IGameView{
+public class TypespeedGUI extends JFrame implements IGameView{
 
     private JFrame mainFrame;
     private GameController controller; 
@@ -152,6 +152,32 @@ public class TypespeedGUI implements IGameView{
         if(mainFrame != null){
             mainFrame.dispose(); 
         }
+    }
+
+    public void displayGameOver() {
+        EndGamePanel endGamePanel = new EndGamePanel(gameModel.getScore(), e -> restartGame());
+        mainFrame.setContentPane(endGamePanel);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+    }
+    
+
+    private void restartGame() {
+        System.out.println("restartGame Method called");
+        controller.restartGame();
+        resetView();
+    }
+
+    private void resetView() {
+        scoreLabel.setText("Score: 0");
+        timeLabel.setText("Time: 60 sec"); 
+        missedLabel.setText("Words Missed: 0");
+
+        inputArea.setText("");
+        drawPanel.setWords(new ArrayList<>());
+        drawPanel.repaint();
+       // inputArea.requestFocusInWindow();
+
     }
 
     public Point getRandomPosition(){

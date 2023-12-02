@@ -33,30 +33,43 @@ public class GameController{
         startGameTimer();
     }
 
+    public void restartGame(){
+        gameModel.startGame();
+    }
+
     private void startGameTimer() {
         gameTimer = new Timer();
         gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
             public void run() {
                 int gameTime = gameModel.getGameTime();
                 gameTime--;
                 gameModel.setGameTime(gameTime);
+                gameView.updateTimer(gameTime);
+    
                 if (gameTime <= 0) {
                     gameTimer.cancel();
                     gameModel.endGame();
-                } 
-                gameView.updateTimer(gameTime);   
+                    gameView.displayGameOver(); // Display the endgame panel
+                }
             }
         }, 0, 1000);
     }
+    
 
     private void startWordGeneration(){
         Timer wordTimer = new Timer(); 
         wordTimer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
-                gameModel.generateWord(); 
+                if (!gameModel.isGameOver()) {
+                    gameModel.generateWord(); 
+                } else {
+                    wordTimer.cancel(); // Stop generating words when the game is over
+                }
             }
-        }, 0, 3000); // every 3 second 
+        }, 0, 3000); // every 3 seconds 
     }
+    
 
     private void startWordMovement(){
         Timer wordMovementTimer = new Timer(); 

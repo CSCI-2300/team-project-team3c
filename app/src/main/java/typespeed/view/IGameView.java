@@ -9,4 +9,5 @@ public interface IGameView{
     void updateAndShowScore(int score);
     void updateTimer(int time);
     void updateMissedWords(int missedWords);
+    void displayGameOver();
 }
