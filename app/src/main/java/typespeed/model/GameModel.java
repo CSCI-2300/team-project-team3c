@@ -11,6 +11,7 @@ public class GameModel implements IGameModel {
     private int score;
     private List<Word> words = new ArrayList<>();
     private List<String> wordList;
+    private int missedWordsCount; 
 
     public GameModel(List<String> wordList) {
         this.wordList = wordList;
@@ -21,6 +22,7 @@ public class GameModel implements IGameModel {
         gameTime = 60;
         score = 0;
         words.clear();
+        missedWordsCount = 0; 
     }
 
     @Override
@@ -47,6 +49,7 @@ public class GameModel implements IGameModel {
             word.updatePosition();
             if (word.getPositionX() >= 800) {
                 iterator.remove(); // remove words that reach the end
+                missedWordsCount++; 
             }
         }
     
@@ -69,6 +72,11 @@ public class GameModel implements IGameModel {
     @Override
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public int getMissedWordsCount() {
+        return missedWordsCount;
     }
 
     @Override

@@ -15,4 +15,5 @@ public interface IGameModel{
     List<Word> getCurrentWords();
     int getScore();
 	List<Word> getWords();
+    int getMissedWordsCount(); 
 }

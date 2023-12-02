@@ -8,4 +8,5 @@ public interface IGameView{
     void updateWordPositions(List<Word> words);
     void updateAndShowScore(int score);
     void updateTimer(int time);
+    void updateMissedWords(int missedWords);
 }

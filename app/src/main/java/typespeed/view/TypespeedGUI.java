@@ -134,7 +134,9 @@ public class TypespeedGUI implements IGameView{
     }
 
     public void updateMissedWords(int missedWords){
-        missedLabel.setText("Words Missed: " + missedWords);
+        if(missedLabel != null){
+            missedLabel.setText("Words Missed: " + missedWords);
+        }
     }
 
     public void updateTimer(int time){
