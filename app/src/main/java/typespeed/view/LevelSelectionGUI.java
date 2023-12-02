@@ -49,10 +49,11 @@ public class LevelSelectionGUI{
 
 private void startGame(String difficulty){
     if (fileHandler.doesFileExist(difficulty)) {
+        List<String> selectedWordList = fileHandler.loadWords(difficulty);
+        gameModel = new GameModel(selectedWordList);
         if(gameGUI != null){
             gameGUI.closeWindow(); 
         }
-        List<String> selectedWordList = fileHandler.loadWords(difficulty);
         gameGUI = new TypespeedGUI(gameModel, difficulty);
     } else {
         JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
