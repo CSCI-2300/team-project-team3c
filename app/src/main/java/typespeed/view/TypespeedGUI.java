@@ -194,11 +194,10 @@ public class TypespeedGUI extends JFrame implements IGameView{
     }
 
 
-public void refreshDisplay(){
-    List<Word> words = controller.getCurrentWords(); 
-    drawPanel.setWords(words);
-    drawPanel.repaint();
+    public void refreshDisplay(){
+        List<Word> words = controller.getCurrentWords(); 
+        drawPanel.setWords(words);
+        drawPanel.repaint();
+    }
 }
-}
-
 

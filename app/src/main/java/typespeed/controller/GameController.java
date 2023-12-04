@@ -37,28 +37,46 @@ public class GameController{
     }
 
     public void restartGame(){
+        gameTimer.cancel(); 
+        startGameTimer(); 
         gameModel.startGame();
         isGameRunning = true; 
     }
 
     private void startGameTimer() {
+        if (gameTimer != null) {
+            gameTimer.cancel();
+            gameTimer.purge(); 
+        }
+
         gameTimer = new Timer();
         gameTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
             public void run() {
-                int gameTime = gameModel.getGameTime();
-                gameTime--;
-                gameModel.setGameTime(gameTime);
-                gameView.updateTimer(gameTime);
-    
-                if (gameTime <= 0) {
-                    gameTimer.cancel();
-                    gameModel.endGame();
-                    isGameRunning = false; 
-                    gameView.displayGameOver(); // Display the endgame panel
+                if (gameModel != null && gameView != null) {
+                    int gameTime = gameModel.getGameTime();
+                    gameTime--;
+                    gameModel.setGameTime(gameTime);
+                    gameView.updateTimer(gameTime);
+
+                    if (gameTime <= 0) {
+                        cancelGameTimer();
+                        gameModel.endGame();
+                        isGameRunning = false;
+                        gameView.displayGameOver(); 
+                    }
+                } else {
+                    cancelGameTimer(); 
                 }
             }
         }, 0, 1000);
+    }
+
+    private void cancelGameTimer(){
+        if(gameTimer != null){
+            gameTimer.cancel(); 
+            gameTimer.purge(); 
+            gameTimer = null; 
+        }
     }
 
     public boolean isGameRunning(){
