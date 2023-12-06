@@ -50,6 +50,7 @@ public class GameController{
         }
 
         gameTimer = new Timer();
+
         gameTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (gameModel != null && gameView != null) {

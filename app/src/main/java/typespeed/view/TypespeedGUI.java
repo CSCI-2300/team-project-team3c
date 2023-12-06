@@ -20,7 +20,6 @@ public class TypespeedGUI extends JFrame implements IGameView{
     private LevelSelectionGUI lvl;
     private GameController controller; 
     private CustomDrawPanel drawPanel;
-   // private EndGamePanel endGamePanel;
     private IGameModel gameModel;  
 
     private JTextArea inputArea;
@@ -158,28 +157,18 @@ public class TypespeedGUI extends JFrame implements IGameView{
 
     public void displayGameOver() {
         EndGamePanel endGamePanel = new EndGamePanel(gameModel.getScore(), e -> restartGame());
+        if (mainFrame != null){
         mainFrame.getContentPane().removeAll(); 
         mainFrame.add(endGamePanel);
-        mainFrame.revalidate(); 
-    }    
-
-    private void restartGame() {
-        System.out.println("restartGame Method called");
-        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI();
-        mainFrame.setVisible(false);
-        //displayGameOver();
+        mainFrame.revalidate();
+        }
     }
 
-    /*private void resetView() {
-        scoreLabel.setText("Score: 0");
-        timeLabel.setText("Time: 60 sec"); 
-        missedLabel.setText("Words Missed: 0");
+    private void restartGame() {
+        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI();
+        mainFrame.setVisible(false);
+    }
 
-        inputArea.setText("");
-        drawPanel.setWords(new ArrayList<>());
-        drawPanel.repaint();
-
-    }*/
 
     public Point getRandomPosition(){
         if (!isFrameVisible()){
@@ -191,13 +180,6 @@ public class TypespeedGUI extends JFrame implements IGameView{
         int x = random.nextInt(screenWidth);
         int y = random.nextInt(screenHeight - 50) + 50; 
         return new Point(x,y);
-    }
-
-
-    public void refreshDisplay(){
-        List<Word> words = controller.getCurrentWords(); 
-        drawPanel.setWords(words);
-        drawPanel.repaint();
     }
 }
 
