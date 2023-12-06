@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
+import typespeed.HighScore;
 import typespeed.IGameModel;
 
 public class GameModel implements IGameModel {
@@ -24,7 +26,7 @@ public class GameModel implements IGameModel {
 
     @Override
     public void startGame() {
-        gameTime = 5;
+        gameTime = 60;
         score = 0;
         words.clear();
         missedWordsCount = 0; 
@@ -34,6 +36,8 @@ public class GameModel implements IGameModel {
     public void endGame() {
         gameTime = 0;
         words.clear();
+        HighScore highScore = new HighScore();
+        highScore.checkAndUpdateHighScore(this.score);
     }
 
     @Override
