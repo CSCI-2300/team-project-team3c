@@ -17,8 +17,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TypespeedGUI extends JFrame implements IGameView{
 
     private JFrame mainFrame;
+    private LevelSelectionGUI lvl;
     private GameController controller; 
     private CustomDrawPanel drawPanel;
+   // private EndGamePanel endGamePanel;
     private IGameModel gameModel;  
 
     private JTextArea inputArea;
@@ -159,18 +161,16 @@ public class TypespeedGUI extends JFrame implements IGameView{
         mainFrame.getContentPane().removeAll(); 
         mainFrame.add(endGamePanel);
         mainFrame.revalidate(); 
-
-        resetView(); 
-        mainFrame.setVisible(true);
     }    
 
     private void restartGame() {
         System.out.println("restartGame Method called");
-        controller.restartGame();
-        resetView();
+        LevelSelectionGUI levelSelectionGUI = new LevelSelectionGUI();
+        mainFrame.setVisible(false);
+        //displayGameOver();
     }
 
-    private void resetView() {
+    /*private void resetView() {
         scoreLabel.setText("Score: 0");
         timeLabel.setText("Time: 60 sec"); 
         missedLabel.setText("Words Missed: 0");
@@ -179,7 +179,7 @@ public class TypespeedGUI extends JFrame implements IGameView{
         drawPanel.setWords(new ArrayList<>());
         drawPanel.repaint();
 
-    }
+    }*/
 
     public Point getRandomPosition(){
         if (!isFrameVisible()){

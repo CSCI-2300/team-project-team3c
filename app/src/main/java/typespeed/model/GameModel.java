@@ -24,7 +24,7 @@ public class GameModel implements IGameModel {
 
     @Override
     public void startGame() {
-        gameTime = 60;
+        gameTime = 5;
         score = 0;
         words.clear();
         missedWordsCount = 0; 
