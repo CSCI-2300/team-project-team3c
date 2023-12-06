@@ -32,8 +32,8 @@ public class LevelSelectionGUI{
         mainFrame.add(titleLabel, BorderLayout.NORTH); 
 
         JPanel bottomPanel = new JPanel(new GridLayout(2, 1, 10, 10)); 
-        JButton easyButton = new JButton("Play Easy Level"); 
-        JButton difficultButton = new JButton("Play Difficult Level"); 
+        JButton easyButton = new JButton("Easy Level"); 
+        JButton difficultButton = new JButton("Difficult Level"); 
 
         easyButton.addActionListener(e -> startGame("PlayEasy.txt"));
         difficultButton.addActionListener(e -> startGame("PlayHard.txt"));

@@ -3,7 +3,6 @@ package typespeed.controller;
 import typespeed.model.Word;
 import typespeed.IGameModel;
 import typespeed.model.GameModel; 
-import typespeed.view.GameObserver;
 import typespeed.view.TypespeedGUI;
 
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class GameController{
                     wordTimer.cancel(); // Stop generating words when the game is over
                 }
             }
-        }, 0, 3000); // every 3 seconds 
+        }, 0, 4000); // every 3 seconds 
     }
     
 
