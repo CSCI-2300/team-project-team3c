@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
 import java.util.List;
+
+import typespeed.model.Difficulty;
 import typespeed.model.GameModel; 
 import typespeed.FileHandler; 
 
@@ -16,11 +18,12 @@ public class LevelSelectionGUI{
     private FileHandler fileHandler;
 
     public LevelSelectionGUI(){
-        this.fileHandler = new FileHandler(); // Ensure this is properly initialized
-        String difficulty = "PlayEasy.txt";
-        this.wordList = fileHandler.loadWords(difficulty);
-    
-        this.gameModel = new GameModel(wordList);
+        this.fileHandler = new FileHandler();
+        Difficulty difficulty = Difficulty.EASY; // Default or based on user choice
+        String filename = getFilenameForDifficulty(difficulty);
+        this.wordList = fileHandler.loadWords(filename);
+
+        this.gameModel = new GameModel(wordList, difficulty);
 
         mainFrame = new JFrame("Typespeed Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,8 +38,8 @@ public class LevelSelectionGUI{
         JButton easyButton = new JButton("Easy Level"); 
         JButton difficultButton = new JButton("Difficult Level"); 
 
-        easyButton.addActionListener(e -> startGame("PlayEasy.txt"));
-        difficultButton.addActionListener(e -> startGame("PlayHard.txt"));
+        easyButton.addActionListener(e -> startGame(Difficulty.EASY));
+        difficultButton.addActionListener(e -> startGame(Difficulty.HARD));
 
         bottomPanel.add(easyButton);
         bottomPanel.add(difficultButton);
@@ -47,17 +50,29 @@ public class LevelSelectionGUI{
         mainFrame.setVisible(true);
     }
 
-private void startGame(String difficulty){
-    if (fileHandler.doesFileExist(difficulty)) {
-        List<String> selectedWordList = fileHandler.loadWords(difficulty);
-        gameModel = new GameModel(selectedWordList);
-        if(gameGUI != null){
-            gameGUI.closeWindow(); 
+    private void startGame(Difficulty difficulty) {
+        String filename = getFilenameForDifficulty(difficulty);
+        if (fileHandler.doesFileExist(filename)) {
+            List<String> selectedWordList = fileHandler.loadWords(filename);
+            gameModel = new GameModel(selectedWordList, difficulty);
+            if (gameGUI != null) {
+                gameGUI.closeWindow(); 
+            }
+            gameGUI = new TypespeedGUI(gameModel, difficulty); // Ensure TypespeedGUI accepts Difficulty
+            mainFrame.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        gameGUI = new TypespeedGUI(gameModel, difficulty);
-        mainFrame.setVisible(false);
-    } else {
-        JOptionPane.showMessageDialog(null, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+
+    private String getFilenameForDifficulty(Difficulty difficulty) {
+        switch (difficulty) {
+            case EASY:
+                return "PlayEasy.txt";
+            case HARD:
+                return "PlayHard.txt";
+            default:
+                return "PlayEasy.txt"; // Default case
+        }
+    }
 }

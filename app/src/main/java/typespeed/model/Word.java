@@ -2,24 +2,30 @@ package typespeed.model;
 
 import java.util.Random;
 
-public class Word{
+public class Word {
     private String text; 
     private int positionX; 
     private int positionY; 
-    private static int SPEED = 5; 
+    private int speed; // Make speed an instance variable
     private static final Random rand = new Random();
     private static final int MAX_X = 800;
 
     private static final int MIN_Y = 250;
     private static final int MAX_Y = 500;
+
     public Word(String text){
         this.text = text;
+        this.speed = 5; // Default speed
         positionX = rand.nextInt(200); 
         positionY = rand.nextInt(MAX_Y - MIN_Y + 1) + MIN_Y;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public void updatePosition(){
-        positionX += SPEED; 
+        positionX += speed; // Use instance speed
         if (positionX > MAX_X){
             positionX = MAX_X;
         }
@@ -40,5 +46,4 @@ public class Word{
     public int getPositionY(){
         return positionY; 
     }
-
 }

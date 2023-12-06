@@ -12,6 +12,7 @@ import typespeed.HighScore;
 import typespeed.IGameModel;
 
 public class GameModel implements IGameModel {
+    private Difficulty difficulty;
     private int gameTime;
     private int score;
     private List<Word> words = new ArrayList<>();
@@ -20,7 +21,8 @@ public class GameModel implements IGameModel {
     private Set<String> activeWords = new HashSet<>();
 
 
-    public GameModel(List<String> wordList) {
+    public GameModel(List<String> wordList, Difficulty difficulty) {
+        this.difficulty = difficulty;
         this.wordList = wordList;
     }
 
@@ -57,14 +59,37 @@ public class GameModel implements IGameModel {
                 int randomIndex = (int) (Math.random() * wordList.size());
                 wordText = wordList.get(randomIndex);
             } while (activeWords.contains(wordText));
-
+    
+            // Modify word generation based on difficulty
             Word newWord = new Word(wordText);
+            adjustWordBasedOnDifficulty(newWord);
+    
             if (!isOverlapping(newWord)) {
                 words.add(newWord);
                 activeWords.add(wordText);
             }
-        } else{
+        } else {
             endGame(); 
+        }
+    }
+
+    private void adjustWordBasedOnDifficulty(Word word) {
+        switch (difficulty) {
+            case EASY:
+                // Adjust word properties for easy difficulty, e.g., slower movement
+                word.setSpeed(10);
+                break;
+            case MEDIUM:
+                // Adjust for medium difficulty
+                word.setSpeed(10);
+                break;
+            case HARD:
+                // Adjust for hard difficulty
+                word.setSpeed(15);
+                break;
+            default:
+                // Default behavior (if needed)
+                break;
         }
     }
 

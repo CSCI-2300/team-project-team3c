@@ -1,5 +1,6 @@
 package typespeed.view;
 
+import typespeed.model.Difficulty;
 import typespeed.model.Word;
 import typespeed.IGameModel;
 import typespeed.controller.GameController;
@@ -55,7 +56,7 @@ public class TypespeedGUI extends JFrame implements IGameView{
         }
     }
 
-    public TypespeedGUI(IGameModel gameModel, String difficulty){
+    public TypespeedGUI(IGameModel gameModel, Difficulty difficulty){
         this.gameModel = gameModel; 
         this.controller = new GameController(gameModel, this);
 
@@ -64,7 +65,7 @@ public class TypespeedGUI extends JFrame implements IGameView{
     }
 
 
-    private void initializeComponents(String difficulty){
+    private void initializeComponents(Difficulty difficulty){
         inputArea = new JTextArea();
         inputArea.requestFocusInWindow();
         inputArea.addKeyListener(new KeyAdapter() {
