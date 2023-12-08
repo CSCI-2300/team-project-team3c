@@ -73,7 +73,7 @@ public class GameModel implements IGameModel {
         }
     }
 
-    private void adjustWordBasedOnDifficulty(Word word) {
+    public void adjustWordBasedOnDifficulty(Word word) {
         switch (difficulty) {
             case EASY:
                 // Adjust word properties for easy difficulty, e.g., slower movement
@@ -95,7 +95,8 @@ public class GameModel implements IGameModel {
 
     public boolean isOverlapping(Word newWord) {
         for (Word word : words) {
-            if (Math.abs(word.getPositionY() - newWord.getPositionY()) < 60) {
+            int verticalDistance = Math.abs(word.getPositionY() - newWord.getPositionY());
+            if (verticalDistance < 60) {
                 return true; 
             }
         }

@@ -24,6 +24,10 @@ public class Word {
         this.speed = speed;
     }
 
+    public int getSpeed(){
+        return speed; 
+    }
+
     public void updatePosition(){
         positionX += speed; // Use instance speed
         if (positionX > MAX_X){
@@ -45,5 +49,13 @@ public class Word {
 
     public int getPositionY(){
         return positionY; 
+    }
+
+    public void setPositionX(int positionX){
+        this.positionX = positionX; 
+    }
+
+    public void setPositionY(int positionY){
+        this.positionY = positionY; 
     }
 }

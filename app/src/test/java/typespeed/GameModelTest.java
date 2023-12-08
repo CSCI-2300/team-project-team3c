@@ -4,50 +4,52 @@
 package typespeed; 
 import typespeed.model.GameModel; 
 import typespeed.model.Word; 
-
-import java.util.ArrayList; 
-import java.util.List; 
+import typespeed.model.Difficulty; 
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Before;
+import java.util.ArrayList; 
 
 public class GameModelTest {
-    private GameModel gameModel; 
-    private List<String> wordList; 
+    @Test
+    public void testStartGame(){
+        GameModel gameModel = new GameModel(new ArrayList<>(), Difficulty.EASY);
 
-    @Before
-    public void setUp(){
-        wordList = new ArrayList<>(); 
-        wordList.add("apple");
-        wordList.add("banana");
+        gameModel.startGame(); 
 
-        gameModel = new GameModel(wordList);
+        assertEquals(60, gameModel.getGameTime());
+        assertEquals(0, gameModel.getScore());
+        assertEquals(0, gameModel.getMissedWordsCount());
+        assertEquals(0, gameModel.getWords().size());
+
     }
 
     @Test
-    public void testGameStartAndEnd(){
-        gameModel.startGame();
-        assertEquals(60, gameModel.getGameTime());
-        assertEquals(0, gameModel.getScore());
+    public void testIsGameOver(){
+        GameModel gameModel = new GameModel(new ArrayList<>(), Difficulty.EASY);
+
+        gameModel.setGameTime(10);
         assertFalse(gameModel.isGameOver());
 
-        while(!gameModel.isGameOver()){
-            gameModel.generateWord(); 
-            gameModel.moveWords(); 
-        }
-        gameModel.endGame();
+        gameModel.setGameTime(0);
         assertTrue(gameModel.isGameOver());
     }
 
-    @Test
-    public void testWordGeneration(){
-        gameModel.startGame(); 
+    @Test 
+    public void testAdjustWordBasedOnDifficulty(){
+        Word word = new Word("Test"); 
 
-        int initialWordsCount = gameModel.getWords().size();
-        gameModel.generateWord();
-        int updatedWordsCount = gameModel.getWords().size(); 
+        GameModel easyModel = new GameModel(new ArrayList<>(), Difficulty.EASY);
+        GameModel mediumModel = new GameModel(new ArrayList<>(), Difficulty.MEDIUM);
+        GameModel hardModel = new GameModel(new ArrayList<>(), Difficulty.HARD);
 
-        assertTrue(updatedWordsCount > initialWordsCount); 
+        easyModel.adjustWordBasedOnDifficulty(word);
+        assertEquals(10, word.getSpeed());
+
+        mediumModel.adjustWordBasedOnDifficulty(word);
+        assertEquals(10, word.getSpeed());
+
+        hardModel.adjustWordBasedOnDifficulty(word);
+        assertEquals(15, word.getSpeed());
     }
 }

@@ -94,7 +94,7 @@ public class GameController{
                     wordTimer.cancel(); // Stop generating words when the game is over
                 }
             }
-        }, 0, 4000); // every 3 seconds 
+        }, 0, 3000); // every 3 seconds 
     }
     
 
