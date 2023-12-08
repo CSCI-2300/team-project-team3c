@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 import typespeed.view.IGameView;
 
-public class GameController{
+public class GameController implements IGameController{
     private final IGameModel gameModel;
     private final IGameView gameView;
     private boolean isGameRunning; 
@@ -42,7 +42,7 @@ public class GameController{
         isGameRunning = true; 
     }
 
-    private void startGameTimer() {
+    public void startGameTimer() {
         if (gameTimer != null) {
             gameTimer.cancel();
             gameTimer.purge(); 
@@ -71,7 +71,7 @@ public class GameController{
         }, 0, 1000);
     }
 
-    private void cancelGameTimer(){
+    public void cancelGameTimer(){
         if(gameTimer != null){
             gameTimer.cancel(); 
             gameTimer.purge(); 
@@ -84,7 +84,7 @@ public class GameController{
     }
     
 
-    private void startWordGeneration(){
+    public void startWordGeneration(){
         Timer wordTimer = new Timer(); 
         wordTimer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
@@ -98,7 +98,7 @@ public class GameController{
     }
     
 
-    private void startWordMovement(){
+    public void startWordMovement(){
         Timer wordMovementTimer = new Timer(); 
         wordMovementTimer.scheduleAtFixedRate(new TimerTask(){
             public void run(){

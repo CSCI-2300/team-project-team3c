@@ -26,7 +26,6 @@ public class GameModel implements IGameModel {
         this.wordList = wordList;
     }
 
-    @Override
     public void startGame() {
         gameTime = 60;
         score = 0;
@@ -34,7 +33,6 @@ public class GameModel implements IGameModel {
         missedWordsCount = 0; 
     }
 
-    @Override
     public void endGame() {
         gameTime = 0;
         words.clear();
@@ -42,13 +40,11 @@ public class GameModel implements IGameModel {
         highScore.checkAndUpdateHighScore(this.score);
     }
 
-    @Override
     public boolean isGameOver(){
         return gameTime <= 0;
     }
 
 
-    @Override
     public void generateWord() {
         if (isGameOver()){
             return;
@@ -60,7 +56,6 @@ public class GameModel implements IGameModel {
                 wordText = wordList.get(randomIndex);
             } while (activeWords.contains(wordText));
     
-            // Modify word generation based on difficulty
             Word newWord = new Word(wordText);
             adjustWordBasedOnDifficulty(newWord);
     
@@ -76,19 +71,15 @@ public class GameModel implements IGameModel {
     public void adjustWordBasedOnDifficulty(Word word) {
         switch (difficulty) {
             case EASY:
-                // Adjust word properties for easy difficulty, e.g., slower movement
                 word.setSpeed(10);
                 break;
             case MEDIUM:
-                // Adjust for medium difficulty
                 word.setSpeed(10);
                 break;
             case HARD:
-                // Adjust for hard difficulty
                 word.setSpeed(15);
                 break;
             default:
-                // Default behavior (if needed)
                 break;
         }
     }
@@ -107,7 +98,6 @@ public class GameModel implements IGameModel {
         activeWords.remove(wordText);
     }
 
-    @Override
     public void moveWords() {
         Iterator<Word> iterator = words.iterator();
         List<Word> wordsToRemove = new ArrayList<>();
@@ -123,7 +113,6 @@ public class GameModel implements IGameModel {
         words.removeAll(wordsToRemove);
     }
 
-    @Override
     public void checkWord(String userInput) {
         Iterator<Word> iterator = words.iterator();
         while (iterator.hasNext()) {
@@ -136,32 +125,26 @@ public class GameModel implements IGameModel {
         }
     }
 
-    @Override
     public int getScore() {
         return score;
     }
 
-    @Override
     public int getMissedWordsCount() {
         return missedWordsCount;
     }
 
-    @Override
     public List<Word> getWords() {
         return new ArrayList<>(words);
     }
 
-    @Override
     public int getGameTime() {
         return gameTime;
     }
 
-    @Override
     public void setGameTime(int gameTime) {
         this.gameTime = gameTime;
     }
 
-    @Override
     public List<Word> getCurrentWords() {
         return words;
     }

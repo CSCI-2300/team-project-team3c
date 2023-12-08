@@ -4,6 +4,7 @@ import typespeed.model.Difficulty;
 import typespeed.model.Word;
 import typespeed.IGameModel;
 import typespeed.controller.GameController;
+import typespeed.controller.IGameController;
 import typespeed.view.IGameView;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class TypespeedGUI extends JFrame implements IGameView{
 
     private JFrame mainFrame;
     private LevelSelectionGUI lvl;
-    private GameController controller; 
+    private IGameController controller; 
     private CustomDrawPanel drawPanel;
     private IGameModel gameModel;  
 
